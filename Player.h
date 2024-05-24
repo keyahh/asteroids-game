@@ -16,6 +16,7 @@ private:
 public:
 
 	Player();
+	Player(sf::Texture* texture);
 
 	//virtual void move(const sf::Vector2f& vec, float dt);
 	void update(const float& dt, sf::RenderWindow* window, sf::View& view, std::vector<Bullet>& bullets, const std::vector<sf::Texture*>& textures);

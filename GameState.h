@@ -8,7 +8,7 @@
 class GameState : public State
 {
 private:
-	Player player;
+	Player* player;
 	sf::View playerCamera;
 	sf::RectangleShape marker;
 	std::vector<Bullet> bullets;

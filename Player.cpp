@@ -1,12 +1,19 @@
 #include "Player.h"
 
 Player::Player()
-	: Entity("images/entities/player.png", 1, 1)
+	: Entity(nullptr, 1, 1)
 {
 	/*for (int i = 0; i < 4; i++)
 	{
 		setAnimation(i);
 	}*/
+	setScale(0.3, 0.3);
+	speed = 2;
+}
+
+Player::Player(sf::Texture* texture)
+	: Entity(texture, 1, 1)
+{
 	setScale(0.3, 0.3);
 	speed = 2;
 }
@@ -65,7 +72,7 @@ void Player::update(const float& dt, sf::RenderWindow* window, sf::View& view, s
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && !shootFlag)
 		{
 			shootFlag = true;
-			bullets.push_back(Bullet(textures[0], rotation, getPosition(), true));
+			bullets.push_back(Bullet(textures[1], rotation, getPosition(), true));
 		}
 	}
 }

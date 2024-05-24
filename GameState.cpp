@@ -17,6 +17,7 @@ GameState::GameState(sf::RenderWindow* window, std::stack<State*>* states, sf::F
 	textures.push_back(new sf::Texture);
 	assert(textures[0]->loadFromFile("images/entities/player.png"));
 	assert(textures[1]->loadFromFile("images/entities/bullet.png"));
+	player = new Player(textures[0]);
 
 	marker.setSize({ 50,50 });
 	marker.setFillColor(sf::Color::Red);
@@ -55,7 +56,7 @@ void GameState::loadFromFile()
 	float y = std::stof(data);
 	
 	sf::Vector2f playerPos = { x, y };
-	player.setPosition(playerPos);
+	player->setPosition(playerPos);
 	playerCamera.reset(sf::FloatRect(x, y, window->getSize().x, window->getSize().y));
 	playerCamera.setCenter(playerPos);
 	in.close();
@@ -64,9 +65,9 @@ void GameState::loadFromFile()
 void GameState::update(const float& dt)
 {
 	//playerCamera.setCenter({ player.getPosition().x + player.getGlobalBounds().width / 2, player.getPosition().y + player.getGlobalBounds().height / 2 });
-	playerCamera.setCenter(player.getPosition());
+	playerCamera.setCenter(player->getPosition());
 	window->setView(playerCamera);
-	player.update(dt, window, playerCamera, bullets, textures);
+	player->update(dt, window, playerCamera, bullets, textures);
 
 	for (int i = 0; i < bullets.size(); i++)
 	{
@@ -79,7 +80,7 @@ void GameState::update(const float& dt)
 void GameState::render(sf::RenderTarget* window)
 {
 	window->draw(marker);
-	window->draw(player);
+	window->draw(*player);
 	for (auto& i : bullets)
 	{
 		window->draw(i);
@@ -89,9 +90,10 @@ void GameState::render(sf::RenderTarget* window)
 void GameState::close()//save game
 {
 	std::ofstream out("game_save.txt", std::ios::trunc); //clears save and rewrites te whole thing
-	out << player.getPosition().x << '\n';
-	out << player.getPosition().y << '\n';
+	out << player->getPosition().x << '\n';
+	out << player->getPosition().y << '\n';
 	out.close();
 
+	delete player;
 	canClose = true;
 }
