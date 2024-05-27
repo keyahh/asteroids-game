@@ -13,6 +13,8 @@ GameState::GameState(sf::RenderWindow* window, std::stack<State*>* states)
 GameState::GameState(sf::RenderWindow* window, std::stack<State*>* states, sf::Font* font, bool readFromFile)
 	: State(window, states, font)
 {
+	srand(time(0));
+
 	for (int i = 0; i < 5; i++)
 	{
 		textures.push_back(new sf::Texture);
@@ -73,6 +75,27 @@ void GameState::loadFromFile()
 	in.close();
 }
 
+void GameState::setAsteroid()
+{
+	float randXPos = player->getPosition().x + ((rand() % (350 - 251) + 300) * (rand() % 2 - 1));
+	float randYPos = player->getPosition().y + ((rand() % (350 - 251) + 300) * (rand() % 2 - 1));
+
+	entities.push_back(new Asteroid(textures[2], 500, rand() % 360, {randXPos, randYPos }));
+}
+
+void GameState::summonAsteroids()
+{
+	for (int i = 0; i < 10; i++)
+	{
+		setAsteroid();
+	}
+}
+
+float GameState::getDistance(Entity* entity1, Entity* entity2)
+{
+	return std::sqrtf(pow(entity2->getPosition().x - entity1->getPosition().x, 2) + pow(entity2->getPosition().y - entity1->getPosition().y, 2));
+}
+
 void GameState::update(const float& dt)
 {
 	//playerCamera.setCenter({ player.getPosition().x + player.getGlobalBounds().width / 2, player.getPosition().y + player.getGlobalBounds().height / 2 });
@@ -87,10 +110,21 @@ void GameState::update(const float& dt)
 		player->setShot(false);
 	}
 
-	for (int i = 0; i < entities.size(); i++)
+	asteroidSpawnTimeProgress += dt;
+	if (asteroidSpawnTimeProgress >= asteroidSpawnTime)
+	{
+		summonAsteroids();
+		asteroidSpawnTimeProgress = 0;
+	}
+
+	for (int i = entities.size() - 1; i >= 0; i--)
 	{
 		entities[i]->update(dt, window, playerCamera);
-		if (entities[i]->getCanKill())
+
+		if (getDistance(player, entities[i]) >= 600) //remove asteroids and bullets that are too far away from player
+			entities[i]->kill();
+
+		if (entities[i]->getCanKill()) //destroy entities marked to be killed
 			entities.erase(entities.begin() + i);
 	}
 }

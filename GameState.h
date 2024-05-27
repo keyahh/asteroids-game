@@ -4,6 +4,9 @@
 #include "State.h"
 #include "Player.h"
 #include "Bullet.h"
+#include "Asteroid.h"
+#include <cstdlib>
+#include <ctime>
 
 class GameState : public State
 {
@@ -14,11 +17,16 @@ private:
 	sf::View playerCamera;
 	sf::RectangleShape marker;
 	std::vector<Entity*> entities;
-
 	TextBox scoreBox;
+	float asteroidSpawnTime = 6, asteroidSpawnTimeProgress = 6;
 
 	void setNewGame();
 	void loadFromFile();
+
+	void setAsteroid(); //creates an asteroid
+	void summonAsteroids(); //summons a random amount of asteroids around the player's view
+
+	float getDistance(Entity* entity1, Entity* entity2);
 
 public:
 

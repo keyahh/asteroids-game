@@ -21,6 +21,7 @@ public:
 	void move(const sf::Vector2f& vec, float dt);
 	virtual void update(const float& dt, sf::RenderWindow* window, sf::View& view) = 0;
 	const bool getCanKill() const;
+	void kill();
 };
 
 #endif

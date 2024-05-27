@@ -37,6 +37,7 @@ void Player::update(const float& dt, sf::RenderWindow* window, sf::View& view)
 		sf::Vector2i mousePos = sf::Mouse::getPosition(*window);
 		sf::Vector2f inViewPos = window->mapPixelToCoords({mousePos.x, mousePos.y}, view);
 		float rotation = (atan2(inViewPos.y - getPosition().y, inViewPos.x - getPosition().x) * (180 / 3.141593)) + 90;
+		//std::cout << rotation << std::endl;
 		setRotation(rotation);
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))

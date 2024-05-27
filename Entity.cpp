@@ -40,3 +40,8 @@ const bool Entity::getCanKill() const
 {
 	return canKill;
 }
+
+void Entity::kill()
+{
+	canKill = true;
+}
