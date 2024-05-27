@@ -8,10 +8,14 @@
 class GameState : public State
 {
 private:
+	int score;
+
 	Player* player;
 	sf::View playerCamera;
 	sf::RectangleShape marker;
-	std::vector<Bullet> bullets;
+	std::vector<Entity*> entities;
+
+	TextBox scoreBox;
 
 	void setNewGame();
 	void loadFromFile();

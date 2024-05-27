@@ -8,10 +8,9 @@
 class Player : public Entity
 {
 private:
-	//void setAnimation(int row);
 	float shootCD = 0.2;
 	float shootCDProgress = 0.0;
-	bool shootFlag = false;
+	bool canShoot = false, shot = false;
 
 public:
 
@@ -19,11 +18,16 @@ public:
 	Player(sf::Texture* texture);
 
 	//virtual void move(const sf::Vector2f& vec, float dt);
-	void update(const float& dt, sf::RenderWindow* window, sf::View& view, std::vector<Bullet>& bullets, const std::vector<sf::Texture*>& textures);
+	virtual void update(const float& dt, sf::RenderWindow* window, sf::View& view);
 
 	bool checkKeyPress() const;
 	const float getSpeed() const;
 	const bool getCanMove() const;
+	const bool checkShot() const;
+
+	void setCanShoot(bool flag);
+	void setShot(bool flag);
+
 };
 
 #endif

@@ -13,15 +13,26 @@ GameState::GameState(sf::RenderWindow* window, std::stack<State*>* states)
 GameState::GameState(sf::RenderWindow* window, std::stack<State*>* states, sf::Font* font, bool readFromFile)
 	: State(window, states, font)
 {
-	textures.push_back(new sf::Texture);
-	textures.push_back(new sf::Texture);
+	for (int i = 0; i < 5; i++)
+	{
+		textures.push_back(new sf::Texture);
+	}
 	assert(textures[0]->loadFromFile("images/entities/player.png"));
 	assert(textures[1]->loadFromFile("images/entities/bullet.png"));
+	assert(textures[2]->loadFromFile("images/entities/asteroid_large.png"));
+	assert(textures[3]->loadFromFile("images/entities/asteroid_medium.png"));
+	assert(textures[4]->loadFromFile("images/entities/asteroid_small.png"));
+
+	scoreBox.create("0", window, *font, { 100, 50 }, 40, sf::Color::White, sf::Color::Transparent);
+
 	player = new Player(textures[0]);
 
 	marker.setSize({ 50,50 });
 	marker.setFillColor(sf::Color::Red);
 	marker.setPosition({ 100, 100 });
+
+	scoreBox.setPosition({ player->getPosition().x - static_cast<float>(window->getSize().x / 2) + 10, player->getPosition().y - static_cast<float>(window->getSize().y / 2) + 10 });
+
 
 	if (readFromFile)
 	{
@@ -65,15 +76,22 @@ void GameState::loadFromFile()
 void GameState::update(const float& dt)
 {
 	//playerCamera.setCenter({ player.getPosition().x + player.getGlobalBounds().width / 2, player.getPosition().y + player.getGlobalBounds().height / 2 });
+	scoreBox.setPosition({ player->getPosition().x - static_cast<float>(window->getSize().x / 2) + 10, player->getPosition().y - static_cast<float>(window->getSize().y / 2) + 10 });
 	playerCamera.setCenter(player->getPosition());
 	window->setView(playerCamera);
-	player->update(dt, window, playerCamera, bullets, textures);
+	player->update(dt, window, playerCamera);
 
-	for (int i = 0; i < bullets.size(); i++)
+	if (player->checkShot())
 	{
-		bullets[i].update(dt, window, playerCamera);
-		if (bullets[i].getCanKill())
-			bullets.erase(bullets.begin() + i);
+		entities.push_back(new Bullet(textures[1], player->getRotation(), player->getPosition(), true));
+		player->setShot(false);
+	}
+
+	for (int i = 0; i < entities.size(); i++)
+	{
+		entities[i]->update(dt, window, playerCamera);
+		if (entities[i]->getCanKill())
+			entities.erase(entities.begin() + i);
 	}
 }
 
@@ -81,9 +99,10 @@ void GameState::render(sf::RenderTarget* window)
 {
 	window->draw(marker);
 	window->draw(*player);
-	for (auto& i : bullets)
+	window->draw(scoreBox);
+	for (auto& i : entities)
 	{
-		window->draw(i);
+		window->draw(*i);
 	}
 }
 
@@ -94,6 +113,10 @@ void GameState::close()//save game
 	out << player->getPosition().y << '\n';
 	out.close();
 
+	for (int i = entities.size() - 1; i >= 0; i--)
+	{
+		delete entities[i];
+	}
 	delete player;
 	canClose = true;
 }

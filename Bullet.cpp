@@ -7,7 +7,7 @@ Bullet::Bullet()
 Bullet::Bullet(sf::Texture* texture, float rotation, const sf::Vector2f& startPos, bool fromPlayer)
 	: Entity(texture, 1, 1), rotation(rotation), fromPlayer(fromPlayer)
 {
-	speed = 700;
+	speed = 800;
 	setPosition(startPos);
 	setRotation(rotation);
 }

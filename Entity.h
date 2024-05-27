@@ -9,8 +9,9 @@ private:
 
 protected:
 	float speed = 1;
-	bool canMove = true;
-	bool collision = true;
+	bool canMove = true, collision = true, canKill = false;
+
+	void setAnimation(int row);
 
 public:
 	Entity();
@@ -18,7 +19,8 @@ public:
 	Entity(sf::Texture* texture, int rows, int cols);
 
 	void move(const sf::Vector2f& vec, float dt);
-	void update(const float& dt, sf::RenderWindow* window, sf::View& view);
+	virtual void update(const float& dt, sf::RenderWindow* window, sf::View& view) = 0;
+	const bool getCanKill() const;
 };
 
 #endif

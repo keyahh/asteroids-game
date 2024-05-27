@@ -18,27 +18,14 @@ Player::Player(sf::Texture* texture)
 	speed = 2;
 }
 
-//void Player::setAnimation(int row)
-//{
-//	std::vector<Frame> frames;
-//	float x = 0, y = row * getRect().height;
-//	for (int i = 0; i < 4; i++)
-//	{
-//		frames.push_back(Frame({ x, y }, 0.15));
-//		x += getRect().width;
-//	}
-//	Animation ani(*this, getRect(), frames, true);
-//	addAnimation(ani);
-//}
-
-void Player::update(const float& dt, sf::RenderWindow* window, sf::View& view, std::vector<Bullet>& bullets, const std::vector<sf::Texture*>& textures)
+void Player::update(const float& dt, sf::RenderWindow* window, sf::View& view)
 {
-	if (shootFlag) 
+	if (!canShoot) 
 	{//shooting cool down
 		shootCDProgress += dt;
 		if (shootCDProgress >= shootCD)
 		{
-			shootFlag = false;
+			canShoot = true;
 			shootCDProgress = 0.0;
 		}
 	}
@@ -69,10 +56,10 @@ void Player::update(const float& dt, sf::RenderWindow* window, sf::View& view, s
 			move({ 0, 100 }, dt);
 		}
 
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && !shootFlag)
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && canShoot)
 		{
-			shootFlag = true;
-			bullets.push_back(Bullet(textures[1], rotation, getPosition(), true));
+			shot = true;
+			canShoot = false;
 		}
 	}
 }
@@ -95,4 +82,19 @@ const float Player::getSpeed() const
 const bool Player::getCanMove() const
 {
 	return canMove;
+}
+
+const bool Player::checkShot() const
+{
+	return shot;
+}
+
+void Player::setCanShoot(bool flag)
+{
+	canShoot = flag;
+}
+
+void Player::setShot(bool flag)
+{
+	shot = flag;
 }

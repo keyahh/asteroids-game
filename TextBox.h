@@ -25,7 +25,7 @@ public:
 	void create(const std::string& text, sf::RenderWindow* window, const sf::Font& font, const sf::Vector2f& boxSize, int fontSize, const sf::Color& textColor, const sf::Color& boxColor);
 
 	virtual void draw(sf::RenderTarget& window, sf::RenderStates states) const;
-	virtual void setPosition(const sf::Vector2f& position, int alignment);
+	void setPosition(const sf::Vector2f& position, int alignment);
 	virtual void setPosition(const sf::Vector2f& position);
 
 	bool checkClick(sf::Window* window) const;
