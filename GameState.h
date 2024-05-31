@@ -25,8 +25,13 @@ private:
 
 	void setAsteroid(); //creates an asteroid
 	void summonAsteroids(); //summons a random amount of asteroids around the player's view
+	void asteroidsLoop(float dt);
+	void collisionLoop();
+	void entityLifeCycleLoop(float dt);
 
 	float getDistance(Entity* entity1, Entity* entity2);
+
+	void die();
 
 public:
 
@@ -34,7 +39,7 @@ public:
 	GameState(sf::RenderWindow* window, std::stack<State*>* states);
 	GameState(sf::RenderWindow* window, std::stack<State*>* states, sf::Font* font, bool readFromFile = false);
 
-	virtual void update(const float& dt);
+	virtual void update(float dt);
 	virtual void render(sf::RenderTarget* window = nullptr);
 	virtual void close();
 

@@ -1,21 +1,20 @@
 #include "Player.h"
 
 Player::Player()
-	: Entity(nullptr, 1, 1)
+	: Entity(nullptr, 1, 1, PLAYER)
+{
+	
+}
+
+Player::Player(sf::Texture* texture)
+	: Entity(texture, 1, 1, PLAYER)
 {
 	/*for (int i = 0; i < 4; i++)
 	{
 		setAnimation(i);
-	}*/
-	setScale(0.3, 0.3);
-	speed = 2;
-}
-
-Player::Player(sf::Texture* texture)
-	: Entity(texture, 1, 1)
-{
-	setScale(0.3, 0.3);
-	speed = 2;
+	}*/;
+	setScale(0.3f, 0.3f);
+	speed = 2.f;
 }
 
 void Player::update(const float& dt, sf::RenderWindow* window, sf::View& view)
@@ -88,6 +87,11 @@ const bool Player::getCanMove() const
 const bool Player::checkShot() const
 {
 	return shot;
+}
+
+void Player::setCanMove(bool flag)
+{
+	canMove = flag;
 }
 
 void Player::setCanShoot(bool flag)

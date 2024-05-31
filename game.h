@@ -21,8 +21,9 @@ private:
 public:
 	Game();
 	Game(const Game& game);
+	Game(sf::RenderWindow* window);
 
-	void updateSFMLEvents();
+	void eventHandler();
 	void update();
 	void render();
 	void run();

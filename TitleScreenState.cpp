@@ -20,7 +20,7 @@ TitleScreenState::TitleScreenState(sf::RenderWindow* window, std::stack<State*>*
 	startButton.setPosition({325, 350});
 }
 
-void TitleScreenState::update(const float& dt)
+void TitleScreenState::update(float dt)
 {
 	keyEvents(dt);
 	startButton.update(dt, window);

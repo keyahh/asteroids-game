@@ -19,7 +19,8 @@ Game::Game(const Game& game)
     *this = game;
 }
 
-void Game::updateSFMLEvents()
+
+void Game::eventHandler()
 {
     while (window.pollEvent(Game::event))
     {
@@ -31,11 +32,10 @@ void Game::updateSFMLEvents()
 void Game::update()
 {
     dt = clock.restart().asSeconds();
-
-    updateSFMLEvents();
+    eventHandler();
     if (!states.empty())
     {
-        states.top()->update(dt);//states are pointers
+        states.top()->update(dt);
         if (states.top()->getClose())
         {
             states.top()->close();

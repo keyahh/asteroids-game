@@ -38,7 +38,7 @@ void MainMenuState::loadGame()
 	states->push(new GameState(window, states, font, true));
 }
 
-void MainMenuState::update(const float& dt)
+void MainMenuState::update(float dt)
 {
 	continueGame.update(dt, window);
 	newGame.update(dt, window);

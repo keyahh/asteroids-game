@@ -70,7 +70,7 @@ void GameState::loadFromFile()
 	
 	sf::Vector2f playerPos = { x, y };
 	player->setPosition(playerPos);
-	playerCamera.reset(sf::FloatRect(x, y, window->getSize().x, window->getSize().y));
+	playerCamera.reset(sf::FloatRect(x, y, static_cast<float>(window->getSize().x), static_cast<float>(window->getSize().y)));
 	playerCamera.setCenter(playerPos);
 	in.close();
 }
@@ -91,14 +91,28 @@ void GameState::summonAsteroids()
 	}
 }
 
+void GameState::asteroidsLoop(float dt)
+{
+	asteroidSpawnTimeProgress += dt;
+	if (asteroidSpawnTimeProgress >= asteroidSpawnTime)
+	{
+		summonAsteroids();
+		asteroidSpawnTimeProgress = 0;
+	}
+}
+
 float GameState::getDistance(Entity* entity1, Entity* entity2)
 {
 	return std::sqrtf(pow(entity2->getPosition().x - entity1->getPosition().x, 2) + pow(entity2->getPosition().y - entity1->getPosition().y, 2));
 }
 
-void GameState::update(const float& dt)
+void GameState::die()
 {
-	//playerCamera.setCenter({ player.getPosition().x + player.getGlobalBounds().width / 2, player.getPosition().y + player.getGlobalBounds().height / 2 });
+	player->setCanMove(false);
+}
+
+void GameState::update(float dt)
+{
 	scoreBox.setPosition({ player->getPosition().x - static_cast<float>(window->getSize().x / 2) + 10, player->getPosition().y - static_cast<float>(window->getSize().y / 2) + 10 });
 	playerCamera.setCenter(player->getPosition());
 	window->setView(playerCamera);
@@ -110,13 +124,14 @@ void GameState::update(const float& dt)
 		player->setShot(false);
 	}
 
-	asteroidSpawnTimeProgress += dt;
-	if (asteroidSpawnTimeProgress >= asteroidSpawnTime)
-	{
-		summonAsteroids();
-		asteroidSpawnTimeProgress = 0;
-	}
+	entityLifeCycleLoop(dt);
+	asteroidsLoop(dt);
+	collisionLoop();
 
+}
+
+void GameState::entityLifeCycleLoop(float dt)
+{
 	for (int i = entities.size() - 1; i >= 0; i--)
 	{
 		entities[i]->update(dt, window, playerCamera);
@@ -129,6 +144,26 @@ void GameState::update(const float& dt)
 	}
 }
 
+void GameState::collisionLoop()
+{
+	for (int i = entities.size() - 1; i >= 0; i--)
+	{
+		for (int j = entities.size() - 1; j >= 0; j--)
+		{
+			if (i != j && entities[i]->getType() == BULLET && (entities[j]->getType() == ASTEROID_LARGE || entities[j]->getType() == ASTEROID_MEDIUM || entities[j]->getType() == ASTEROID_SMALL))
+			{
+				if (getDistance(entities[i], entities[j]) <= 20.0f)
+				{
+					entities[j]->kill();
+					entities[i]->kill();
+				}
+			}
+			else
+				continue;
+		}
+	}
+}
+
 void GameState::render(sf::RenderTarget* window)
 {
 	window->draw(marker);
@@ -137,6 +172,7 @@ void GameState::render(sf::RenderTarget* window)
 	for (auto& i : entities)
 	{
 		window->draw(*i);
+		//window->draw(i->getHitBox());
 	}
 }
 

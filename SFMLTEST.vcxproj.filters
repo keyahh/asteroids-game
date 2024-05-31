@@ -27,9 +27,6 @@
     <ClInclude Include="Bullet.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
-    <ClInclude Include="Direction.h">
-      <Filter>Resource Files</Filter>
-    </ClInclude>
     <ClInclude Include="Entity.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
@@ -55,6 +52,9 @@
       <Filter>Resource Files</Filter>
     </ClInclude>
     <ClInclude Include="TitleScreenState.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityType.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
   </ItemGroup>

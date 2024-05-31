@@ -13,7 +13,7 @@ public:
 	Bullet();
 	Bullet(sf::Texture* texture, float rotation, const sf::Vector2f& startPos, bool fromPlayer = false);
 	virtual void update(const float& dt, sf::RenderWindow* window, sf::View& view);
-	void move(const sf::Vector2f& vec, float dt);
+	//void move(const sf::Vector2f& vec, float dt);
 	const bool getCanKill() const;
 };
 

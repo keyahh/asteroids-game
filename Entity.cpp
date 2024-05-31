@@ -9,8 +9,8 @@ Entity::Entity()
 //{
 //}
 
-Entity::Entity(sf::Texture* texture, int rows, int cols)
-	: AnimatedSpriteSheet(texture, rows, cols)
+Entity::Entity(sf::Texture* texture, int rows, int cols, EntityType type)
+	: AnimatedSpriteSheet(texture, rows, cols), type(type)
 {
 }
 
@@ -32,10 +32,6 @@ void Entity::move(const sf::Vector2f& vec, float dt)
 	Sprite::move({ vec.x * speed * dt, vec.y * speed * dt });
 }
 
-void Entity::update(const float& dt, sf::RenderWindow* window, sf::View& view)
-{
-}
-
 const bool Entity::getCanKill() const
 {
 	return canKill;
@@ -45,3 +41,9 @@ void Entity::kill()
 {
 	canKill = true;
 }
+
+const EntityType& Entity::getType() const
+{
+	return type;
+}
+

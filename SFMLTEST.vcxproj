@@ -23,8 +23,8 @@
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Asteroid.h" />
     <ClInclude Include="Bullet.h" />
-    <ClInclude Include="Direction.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="EntityType.h" />
     <ClInclude Include="Frame.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="GameState.h" />

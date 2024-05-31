@@ -99,7 +99,3 @@ sf::IntRect& AnimatedSpriteSheet::getRect()
 	return intRect;
 }
 
-//sf::RectangleShape& AnimatedSpriteSheet::getHitBox()
-//{
-//	return hitbox;
-//}

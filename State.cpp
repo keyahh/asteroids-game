@@ -20,7 +20,7 @@ void State::close()
 	canClose = true;
 }
 
-void State::update(const float& dt)
+void State::update(float dt)
 {
 }
 

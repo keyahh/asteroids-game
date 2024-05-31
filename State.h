@@ -36,7 +36,7 @@ public:
 	bool checkKeyPress(const sf::Keyboard::Key& key) const;
 
 	virtual void close();
-	virtual void update(const float& dt);
+	virtual void update(float dt);
 	virtual void render(sf::RenderTarget* window);
 	virtual void keyEvents(const float& dt);
 

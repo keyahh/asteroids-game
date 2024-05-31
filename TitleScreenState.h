@@ -14,7 +14,7 @@ public:
 	TitleScreenState();
 	TitleScreenState(sf::RenderWindow* window, std::stack<State*>* states, sf::Font* font);
 
-	virtual void update(const float& dt);
+	virtual void update(float dt);
 	virtual void render(sf::RenderTarget* window = nullptr);
 	virtual void keyEvents(const float& dt);
 

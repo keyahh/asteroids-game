@@ -8,8 +8,8 @@
 class Player : public Entity
 {
 private:
-	float shootCD = 0.2;
-	float shootCDProgress = 0.0;
+	float shootCD = 0.2f;
+	float shootCDProgress = 0.0f;
 	bool canShoot = false, shot = false;
 
 public:
@@ -25,6 +25,7 @@ public:
 	const bool getCanMove() const;
 	const bool checkShot() const;
 
+	void setCanMove(bool flag);
 	void setCanShoot(bool flag);
 	void setShot(bool flag);
 
