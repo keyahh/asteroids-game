@@ -54,11 +54,10 @@ void GameState::setNewGame()
 	std::ofstream out("game_save.txt");
 	out << "0\n";
 	out << "0\n";
+	out << "0\n";
 	out.close();
 
-	//player.setPosition({ static_cast<float>(window->getSize().x / 2 - player.getGlobalBounds().width / 2), static_cast<float>(window->getSize().y / 2 - player.getGlobalBounds().height / 2) });
 	playerCamera.reset((sf::FloatRect(0, 0, window->getSize().x, window->getSize().y)));
-	//playerCamera.setCenter({ player.getPosition().x + player.getGlobalBounds().width / 2, player.getPosition().y + player.getGlobalBounds().height / 2 });
 }
 
 void GameState::loadFromFile()
@@ -73,16 +72,17 @@ void GameState::loadFromFile()
 	getline(in, data);
 	score = std::stoi(data);
 	
+	in.close();
+
 	sf::Vector2f playerPos = { x, y };
 	player->setPosition(playerPos);
 	playerCamera.reset(sf::FloatRect(x, y, static_cast<float>(window->getSize().x), static_cast<float>(window->getSize().y)));
 	playerCamera.setCenter(playerPos);
-	in.close();
 }
 
 int GameState::rngRangeNeg(int min, int max)
 {
-	int x = rand() % max - min + 1 + min;
+	int x = rand() % (max - min + 1) + min;
 	int sign = rand() % 2 + 1;
 	if (sign == 1)
 	{
@@ -94,8 +94,8 @@ int GameState::rngRangeNeg(int min, int max)
 
 void GameState::setAsteroid()
 {
-	float randXPos = player->getPosition().x + rngRangeNeg(400, 500);
-	float randYPos = player->getPosition().y + rngRangeNeg(400, 500);
+	float randXPos = player->getPosition().x + rngRangeNeg(200, 300);
+	float randYPos = player->getPosition().y + rngRangeNeg(200, 300);
 
 	entities.push_back(new Asteroid(textures[2], 200, rand() % 360, {randXPos, randYPos }));
 }
@@ -162,9 +162,19 @@ void GameState::entityLifeCycleLoop(float dt)
 	}
 }
 
-void GameState::splitAsteroid(Entity* asteroid, Entity* bullet)
+void GameState::killAsteroid(Entity* asteroid, Entity* bullet)
 {
-
+	score += asteroid->getValue();
+	switch (asteroid->getType())
+	{
+	case(ASTEROID_LARGE):
+		break;
+	case(ASTEROID_MEDIUM):
+		break;
+	default:
+		break;
+	}
+	asteroid->kill();
 }
 
 void GameState::collisionLoop()
@@ -177,10 +187,7 @@ void GameState::collisionLoop()
 			{
 				if (getDistance(entities[i], entities[j]) <= 20.0f)
 				{
-					if (entities[j]->getType() == ASTEROID_LARGE || entities[j]->getType() == ASTEROID_MEDIUM)
-						splitAsteroid(entities[j], entities[i]);
-					score += entities[j]->getValue();
-					entities[j]->kill();
+					killAsteroid(entities[j], entities[i]);
 					entities[i]->kill();
 				}
 			}

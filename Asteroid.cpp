@@ -19,7 +19,7 @@ Asteroid::Asteroid(sf::Texture* texture, int value, float rotation)
 Asteroid::Asteroid(sf::Texture* texture, int value, float rotation, const sf::Vector2f& startPos, EntityType type)
 	: Entity(texture, 1, 1, type), value(value), rotation(rotation)
 {
-	speed = 80;
+	speed = rand() % 81 + 80;
 	setPosition(startPos);
 	setScale(3,3);
 }

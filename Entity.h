@@ -3,6 +3,7 @@
 
 #include "AnimatedSpriteSheet.h"
 #include "EntityType.h"
+#include <cstdlib>
 
 class Entity : public AnimatedSpriteSheet
 {

@@ -30,7 +30,7 @@ private:
 	void asteroidsLoop(float dt);
 	void collisionLoop();
 	void entityLifeCycleLoop(float dt);
-	void splitAsteroid(Entity* asteroid, Entity* bullet);
+	void killAsteroid(Entity* asteroid, Entity* bullet);
 
 	float getDistance(Entity* entity1, Entity* entity2);
 
