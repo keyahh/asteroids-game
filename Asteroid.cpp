@@ -37,6 +37,11 @@ const float Asteroid::getRotation() const
 	return rotation;
 }
 
+const int Asteroid::getValue() const
+{
+	return value;
+}
+
 void Asteroid::setRotation(float rotation)
 {
 	Asteroid::rotation = rotation;

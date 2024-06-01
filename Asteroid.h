@@ -18,6 +18,7 @@ public:
 	virtual void update(const float& dt, sf::RenderWindow* window, sf::View& view);
 
 	const float getRotation() const;
+	virtual const int getValue() const;
 	void setRotation(float rotation);
 
 };

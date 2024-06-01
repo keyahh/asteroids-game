@@ -64,6 +64,11 @@ void Player::update(const float& dt, sf::RenderWindow* window, sf::View& view)
 	}
 }
 
+const int Player::getValue() const
+{
+	return 0;
+}
+
 bool Player::checkKeyPress() const
 {
 	for (int k = -1; k < sf::Keyboard::KeyCount; ++k)

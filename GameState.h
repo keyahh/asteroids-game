@@ -17,9 +17,11 @@ private:
 	sf::View playerCamera;
 	sf::RectangleShape marker;
 	std::vector<Entity*> entities;
-	TextBox scoreBox;
-	float asteroidSpawnTime = 4.5, asteroidSpawnTimeProgress = 4.5;
+	//TextBox scoreBox;
+	sf::Text scoreBoard;
+	float asteroidSpawnTime = 2.5, asteroidSpawnTimeProgress = 4.5;
 
+	int rngRangeNeg(int min, int max);
 	void setNewGame();
 	void loadFromFile();
 
@@ -28,6 +30,7 @@ private:
 	void asteroidsLoop(float dt);
 	void collisionLoop();
 	void entityLifeCycleLoop(float dt);
+	void splitAsteroid(Entity* asteroid, Entity* bullet);
 
 	float getDistance(Entity* entity1, Entity* entity2);
 

@@ -25,7 +25,10 @@ GameState::GameState(sf::RenderWindow* window, std::stack<State*>* states, sf::F
 	assert(textures[3]->loadFromFile("images/entities/asteroid_medium.png"));
 	assert(textures[4]->loadFromFile("images/entities/asteroid_small.png"));
 
-	scoreBox.create("0", window, *font, { 100, 50 }, 40, sf::Color::White, sf::Color::Transparent);
+	//scoreBox.create("0", window, *font, { 100, 50 }, 40, sf::Color::White, sf::Color::Transparent);
+	scoreBoard.setFont(*font);
+	scoreBoard.setFillColor(sf::Color::White);
+	scoreBoard.setString(std::to_string(score));
 
 	player = new Player(textures[0]);
 
@@ -33,7 +36,7 @@ GameState::GameState(sf::RenderWindow* window, std::stack<State*>* states, sf::F
 	marker.setFillColor(sf::Color::Red);
 	marker.setPosition({ 100, 100 });
 
-	scoreBox.setPosition({ player->getPosition().x - static_cast<float>(window->getSize().x / 2) + 10, player->getPosition().y - static_cast<float>(window->getSize().y / 2) + 10 });
+	scoreBoard.setPosition({ player->getPosition().x - static_cast<float>(window->getSize().x / 2) + 10, player->getPosition().y - static_cast<float>(window->getSize().y / 2) + 10 });
 
 
 	if (readFromFile)
@@ -67,6 +70,8 @@ void GameState::loadFromFile()
 	float x = std::stof(data);
 	getline(in, data);
 	float y = std::stof(data);
+	getline(in, data);
+	score = std::stoi(data);
 	
 	sf::Vector2f playerPos = { x, y };
 	player->setPosition(playerPos);
@@ -75,12 +80,24 @@ void GameState::loadFromFile()
 	in.close();
 }
 
+int GameState::rngRangeNeg(int min, int max)
+{
+	int x = rand() % max - min + 1 + min;
+	int sign = rand() % 2 + 1;
+	if (sign == 1)
+	{
+		return x;
+	}
+	return x * -1;
+
+}
+
 void GameState::setAsteroid()
 {
-	float randXPos = player->getPosition().x + ((rand() % (350 - 251) + 300) * (rand() % 2 - 1));
-	float randYPos = player->getPosition().y + ((rand() % (350 - 251) + 300) * (rand() % 2 - 1));
+	float randXPos = player->getPosition().x + rngRangeNeg(400, 500);
+	float randYPos = player->getPosition().y + rngRangeNeg(400, 500);
 
-	entities.push_back(new Asteroid(textures[2], 500, rand() % 360, {randXPos, randYPos }));
+	entities.push_back(new Asteroid(textures[2], 200, rand() % 360, {randXPos, randYPos }));
 }
 
 void GameState::summonAsteroids()
@@ -113,7 +130,8 @@ void GameState::die()
 
 void GameState::update(float dt)
 {
-	scoreBox.setPosition({ player->getPosition().x - static_cast<float>(window->getSize().x / 2) + 10, player->getPosition().y - static_cast<float>(window->getSize().y / 2) + 10 });
+	scoreBoard.setString(std::to_string(score));
+	scoreBoard.setPosition({ player->getPosition().x - static_cast<float>(window->getSize().x / 2) + 10, player->getPosition().y - static_cast<float>(window->getSize().y / 2) + 10 });
 	playerCamera.setCenter(player->getPosition());
 	window->setView(playerCamera);
 	player->update(dt, window, playerCamera);
@@ -144,6 +162,11 @@ void GameState::entityLifeCycleLoop(float dt)
 	}
 }
 
+void GameState::splitAsteroid(Entity* asteroid, Entity* bullet)
+{
+
+}
+
 void GameState::collisionLoop()
 {
 	for (int i = entities.size() - 1; i >= 0; i--)
@@ -154,6 +177,9 @@ void GameState::collisionLoop()
 			{
 				if (getDistance(entities[i], entities[j]) <= 20.0f)
 				{
+					if (entities[j]->getType() == ASTEROID_LARGE || entities[j]->getType() == ASTEROID_MEDIUM)
+						splitAsteroid(entities[j], entities[i]);
+					score += entities[j]->getValue();
 					entities[j]->kill();
 					entities[i]->kill();
 				}
@@ -168,7 +194,7 @@ void GameState::render(sf::RenderTarget* window)
 {
 	window->draw(marker);
 	window->draw(*player);
-	window->draw(scoreBox);
+	window->draw(scoreBoard);
 	for (auto& i : entities)
 	{
 		window->draw(*i);
@@ -181,6 +207,7 @@ void GameState::close()//save game
 	std::ofstream out("game_save.txt", std::ios::trunc); //clears save and rewrites te whole thing
 	out << player->getPosition().x << '\n';
 	out << player->getPosition().y << '\n';
+	out << score << '\n';
 	out.close();
 
 	for (int i = entities.size() - 1; i >= 0; i--)

@@ -27,6 +27,11 @@ void Bullet::update(const float& dt, sf::RenderWindow* window, sf::View& view)
 	Entity::move(direction, dt);
 }
 
+const int Bullet::getValue() const
+{
+	return 0;
+}
+
 //void Bullet::move(const sf::Vector2f& vec, float dt)
 //{
 //	Sprite::move({ vec.x * speed * dt, vec.y * speed * dt });
