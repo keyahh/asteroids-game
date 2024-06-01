@@ -26,25 +26,10 @@ Asteroid::Asteroid(sf::Texture* texture, int value, float rotation, const sf::Ve
 
 void Asteroid::update(const float& dt, sf::RenderWindow* window, sf::View& view)
 {
+	setOrigin({ getLocalBounds().width / 2, getLocalBounds().height / 2 });
 	double radian = (rotation - 90) * (3.141593 / 180);
 	sf::Vector2f direction = { static_cast<float>(cos(radian)), static_cast<float>(sin(radian)) };
 	move(direction, dt);
-
-	/*setOrigin({static_cast<float>(getTexture()->getSize().x / 2), static_cast<float>(getTexture()->getSize().y / 2) });
-
-	setRotation(animationRotation);
-	rotationProgress += dt;
-	if (rotationProgress >= rotationTime)
-	{
-		if (clockWise)
-		{
-			animationRotation += 5;
-		}
-		else
-		{
-			animationRotation -= 5;
-		}
-	}*/
 }
 
 const float Asteroid::getRotation() const

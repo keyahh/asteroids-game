@@ -15,6 +15,7 @@ Bullet::Bullet(sf::Texture* texture, float rotation, const sf::Vector2f& startPo
 
 void Bullet::update(const float& dt, sf::RenderWindow* window, sf::View& view)
 {
+	setOrigin({ getLocalBounds().width / 2, getLocalBounds().height / 2 });
 	travelTime += dt;
 	if (travelTime >= maxTravelTime) //bullet gets deleted in gamestate update
 	{//no need to reset travelTime

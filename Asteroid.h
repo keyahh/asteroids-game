@@ -7,9 +7,7 @@ class Asteroid : public Entity
 {
 private:
 	int value = 0;
-	float rotation = 0, animationRotation = 0; //rotation is direction asteroid is flying in, animationRotation is the sprite spinning
-	float rotationTime = 0.1f, rotationProgress = 0.f;
-	bool clockWise = true;
+	float rotation = 0, rotationTime = 0.1f, rotationProgress = 0.f;
 
 public:
 	Asteroid();

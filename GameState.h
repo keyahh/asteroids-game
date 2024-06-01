@@ -18,7 +18,7 @@ private:
 	sf::RectangleShape marker;
 	std::vector<Entity*> entities;
 	TextBox scoreBox;
-	float asteroidSpawnTime = 6, asteroidSpawnTimeProgress = 6;
+	float asteroidSpawnTime = 4.5, asteroidSpawnTimeProgress = 4.5;
 
 	void setNewGame();
 	void loadFromFile();
