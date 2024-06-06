@@ -52,6 +52,10 @@ GameState::GameState(sf::RenderWindow* window, std::stack<State*>* states, sf::F
 void GameState::setNewGame()
 {
 	std::ofstream out("game_save.txt");
+	lives = 3;
+	score = 0;
+
+	out << "0\n";
 	out << "0\n";
 	out << "0\n";
 	out << "0\n";
@@ -71,6 +75,8 @@ void GameState::loadFromFile()
 	float y = std::stof(data);
 	getline(in, data);
 	score = std::stoi(data);
+	getline(in, data);
+	lives = std::stoi(data);
 	
 	in.close();
 
@@ -108,14 +114,23 @@ void GameState::summonAsteroids()
 	}
 }
 
-void GameState::asteroidsLoop(float dt)
+void GameState::killAsteroid(Entity* asteroid, Entity* bullet)
 {
-	asteroidSpawnTimeProgress += dt;
-	if (asteroidSpawnTimeProgress >= asteroidSpawnTime)
+	score += asteroid->getValue();
+	switch (asteroid->getType())
 	{
-		summonAsteroids();
-		asteroidSpawnTimeProgress = 0;
+	case(ASTEROID_LARGE):
+		entities.push_back(new Asteroid(textures[3], 750, bullet->getRotation() + rngRangeNeg(40, 75), asteroid->getPosition(), ASTEROID_MEDIUM, 100));
+		entities.push_back(new Asteroid(textures[3], 750, bullet->getRotation() + rngRangeNeg(40, 75), asteroid->getPosition(), ASTEROID_MEDIUM, 100));
+		break;
+	case(ASTEROID_MEDIUM):
+		entities.push_back(new Asteroid(textures[4], 1000, bullet->getRotation() + rngRangeNeg(40, 75), asteroid->getPosition(), ASTEROID_SMALL, 120));
+		entities.push_back(new Asteroid(textures[4], 1000, bullet->getRotation() + rngRangeNeg(40, 75), asteroid->getPosition(), ASTEROID_SMALL, 120));
+		break;
+	default:
+		break;
 	}
+	asteroid->kill();
 }
 
 float GameState::getDistance(Entity* entity1, Entity* entity2)
@@ -141,6 +156,10 @@ void GameState::update(float dt)
 		entities.push_back(new Bullet(textures[1], player->getRotation(), player->getPosition(), true));
 		player->setShot(false);
 	}
+	if (lives <= 0)
+	{
+		die();
+	}
 
 	entityLifeCycleLoop(dt);
 	asteroidsLoop(dt);
@@ -162,19 +181,14 @@ void GameState::entityLifeCycleLoop(float dt)
 	}
 }
 
-void GameState::killAsteroid(Entity* asteroid, Entity* bullet)
+void GameState::asteroidsLoop(float dt)
 {
-	score += asteroid->getValue();
-	switch (asteroid->getType())
+	asteroidSpawnTimeProgress += dt;
+	if (asteroidSpawnTimeProgress >= asteroidSpawnTime)
 	{
-	case(ASTEROID_LARGE):
-		break;
-	case(ASTEROID_MEDIUM):
-		break;
-	default:
-		break;
+		summonAsteroids();
+		asteroidSpawnTimeProgress = 0;
 	}
-	asteroid->kill();
 }
 
 void GameState::collisionLoop()
@@ -215,6 +229,7 @@ void GameState::close()//save game
 	out << player->getPosition().x << '\n';
 	out << player->getPosition().y << '\n';
 	out << score << '\n';
+	out << lives << '\n';
 	out.close();
 
 	for (int i = entities.size() - 1; i >= 0; i--)

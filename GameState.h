@@ -11,7 +11,7 @@
 class GameState : public State
 {
 private:
-	int score;
+	int score, lives;
 
 	Player* player;
 	sf::View playerCamera;

@@ -11,15 +11,15 @@ Asteroid::Asteroid(sf::Texture* texture, int value)
 }
 
 Asteroid::Asteroid(sf::Texture* texture, int value, float rotation)
-	: Asteroid(texture, value, rotation, { 0, 0 })
+	: Asteroid(texture, value, rotation, { 0, 0 }, ASTEROID_LARGE, 80)
 {
 
 }
 
-Asteroid::Asteroid(sf::Texture* texture, int value, float rotation, const sf::Vector2f& startPos, EntityType type)
+Asteroid::Asteroid(sf::Texture* texture, int value, float rotation, const sf::Vector2f& startPos, EntityType type, int baseSpeed)
 	: Entity(texture, 1, 1, type), value(value), rotation(rotation)
 {
-	speed = rand() % 81 + 80;
+	speed = rand() % (baseSpeed * 2 - baseSpeed + 1) + baseSpeed;
 	setPosition(startPos);
 	setScale(3,3);
 }

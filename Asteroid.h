@@ -13,7 +13,7 @@ public:
 	Asteroid();
 	Asteroid(sf::Texture* texture, int value);
 	Asteroid(sf::Texture* texture, int value, float rotation);
-	Asteroid(sf::Texture* texture, int value, float rotation, const sf::Vector2f& startPos, EntityType type = ASTEROID_LARGE);
+	Asteroid(sf::Texture* texture, int value, float rotation, const sf::Vector2f& startPos, EntityType type = ASTEROID_LARGE, int baseSpeed = 80);
 
 	virtual void update(const float& dt, sf::RenderWindow* window, sf::View& view);
 

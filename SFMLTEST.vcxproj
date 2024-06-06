@@ -29,10 +29,12 @@
     <ClInclude Include="game.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="MainMenuState.h" />
+    <ClInclude Include="Planet.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="TextBox.h" />
     <ClInclude Include="TitleScreenState.h" />
+    <ClInclude Include="UFO.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AnimatedSpriteSheet.cpp" />
@@ -45,10 +47,12 @@
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenuState.cpp" />
+    <ClCompile Include="Planet.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="TextBox.cpp" />
     <ClCompile Include="TitleScreenState.cpp" />
+    <ClCompile Include="UFO.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
