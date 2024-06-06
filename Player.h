@@ -9,7 +9,7 @@ class Player : public Entity
 {
 private:
 	float shootCD = 0.2f, shootCDProgress = 0.0f, iFrames = 1.0f, iFrameProgress = 0.0f;
-	bool canShoot = false, shot = false, invulnerable = true;
+	bool canShoot = false, shot = false, invulnerable = false;
 
 public:
 
@@ -29,6 +29,7 @@ public:
 	void setCanMove(bool flag);
 	void setCanShoot(bool flag);
 	void setShot(bool flag);
+	void setInvul(bool flag);
 
 	void hit();
 };

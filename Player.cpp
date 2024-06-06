@@ -123,6 +123,11 @@ void Player::setShot(bool flag)
 	shot = flag;
 }
 
+void Player::setInvul(bool flag)
+{
+	invulnerable = flag;
+}
+
 void Player::hit()
 {
 	invulnerable = true;

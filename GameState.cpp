@@ -54,6 +54,7 @@ void GameState::setNewGame()
 	std::ofstream out("game_save.txt");
 	lives = 3;
 	score = 0;
+	player->setPosition({ 0.f, 0.f });
 
 	out << "0\n";
 	out << "0\n";
@@ -95,9 +96,24 @@ void GameState::setLives()
 	livesVec.clear();
 	for (int i = 0; i < lives; i++)
 	{
-		livesVec.push_back(sf::CircleShape(30));
+		livesVec.push_back(sf::CircleShape(20));
 		livesVec[i].setFillColor(sf::Color::White);
+		livesVec[i].setOutlineThickness(4.f);
 		livesVec[i].setOutlineColor(sf::Color::Red);
+	}
+}
+
+void GameState::moveLives()
+{
+	//sf::Vector2f startPos = { player->getPosition().x - static_cast<float>(window->getSize().x) / 2.1f, player->getPosition().y - static_cast<float>(window->getSize().y) / 2.1f };
+	sf::Vector2f startPos = { scoreBoard.getPosition().x, scoreBoard.getPosition().y + 50};
+	if (!livesVec.empty())
+	{
+		for (auto& i : livesVec)
+		{
+			i.setPosition(startPos);
+			startPos.x += i.getRadius() * 2.5;
+		}
 	}
 }
 
@@ -153,9 +169,23 @@ float GameState::getDistance(Entity* entity1, Entity* entity2)
 	return std::sqrtf(pow(entity2->getPosition().x - entity1->getPosition().x, 2) + pow(entity2->getPosition().y - entity1->getPosition().y, 2));
 }
 
+void GameState::hitPlayer()
+{
+	player->hit();
+	lives--;
+	livesVec.pop_back();
+	//std::cout << "hit\n lives: " << lives << std::endl;
+
+	if (lives <= 0)
+	{
+		die();
+	}
+}
+
 void GameState::die()
 {
 	player->setCanMove(false);
+	//add deat screen
 }
 
 void GameState::update(float dt)
@@ -165,6 +195,7 @@ void GameState::update(float dt)
 	playerCamera.setCenter(player->getPosition());
 	window->setView(playerCamera);
 	player->update(dt, window, playerCamera);
+	moveLives();
 
 	if (player->checkShot())
 	{
@@ -222,6 +253,13 @@ void GameState::collisionLoop()
 			}
 			else
 				continue;
+		}
+		if (!player->getInvul() && (entities[i]->getType() == ASTEROID_LARGE || entities[i]->getType() == ASTEROID_MEDIUM || entities[i]->getType() == ASTEROID_SMALL))
+		{
+			if (getDistance(player, entities[i]) <= 24.f)
+			{
+				hitPlayer();
+			}
 		}
 	}
 }

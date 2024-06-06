@@ -25,6 +25,7 @@ private:
 	void setNewGame();
 	void loadFromFile();
 	void setLives();
+	void moveLives();
 	void setAsteroid(); //creates an asteroid
 	void summonAsteroids(); //summons a random amount of asteroids around the player's view
 	void asteroidsLoop(float dt);
@@ -34,6 +35,7 @@ private:
 
 	float getDistance(Entity* entity1, Entity* entity2);
 
+	void hitPlayer();
 	void die();
 
 public:
