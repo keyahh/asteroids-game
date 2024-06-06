@@ -62,6 +62,8 @@ void GameState::setNewGame()
 	out.close();
 
 	playerCamera.reset((sf::FloatRect(0, 0, window->getSize().x, window->getSize().y)));
+
+	setLives();
 }
 
 void GameState::loadFromFile()
@@ -84,6 +86,19 @@ void GameState::loadFromFile()
 	player->setPosition(playerPos);
 	playerCamera.reset(sf::FloatRect(x, y, static_cast<float>(window->getSize().x), static_cast<float>(window->getSize().y)));
 	playerCamera.setCenter(playerPos);
+
+	setLives();
+}
+
+void GameState::setLives()
+{
+	livesVec.clear();
+	for (int i = 0; i < lives; i++)
+	{
+		livesVec.push_back(sf::CircleShape(30));
+		livesVec[i].setFillColor(sf::Color::White);
+		livesVec[i].setOutlineColor(sf::Color::Red);
+	}
 }
 
 int GameState::rngRangeNeg(int min, int max)
@@ -103,7 +118,7 @@ void GameState::setAsteroid()
 	float randXPos = player->getPosition().x + rngRangeNeg(200, 300);
 	float randYPos = player->getPosition().y + rngRangeNeg(200, 300);
 
-	entities.push_back(new Asteroid(textures[2], 200, rand() % 360, {randXPos, randYPos }));
+	entities.push_back(new Asteroid(textures[2], 50, rand() % 360, {randXPos, randYPos }));
 }
 
 void GameState::summonAsteroids()
@@ -120,12 +135,12 @@ void GameState::killAsteroid(Entity* asteroid, Entity* bullet)
 	switch (asteroid->getType())
 	{
 	case(ASTEROID_LARGE):
-		entities.push_back(new Asteroid(textures[3], 750, bullet->getRotation() + rngRangeNeg(40, 75), asteroid->getPosition(), ASTEROID_MEDIUM, 100));
-		entities.push_back(new Asteroid(textures[3], 750, bullet->getRotation() + rngRangeNeg(40, 75), asteroid->getPosition(), ASTEROID_MEDIUM, 100));
+		entities.push_back(new Asteroid(textures[3], 100, bullet->getRotation() + rngRangeNeg(40, 75), asteroid->getPosition(), ASTEROID_MEDIUM, 100));
+		entities.push_back(new Asteroid(textures[3], 100, bullet->getRotation() + rngRangeNeg(40, 75), asteroid->getPosition(), ASTEROID_MEDIUM, 100));
 		break;
 	case(ASTEROID_MEDIUM):
-		entities.push_back(new Asteroid(textures[4], 1000, bullet->getRotation() + rngRangeNeg(40, 75), asteroid->getPosition(), ASTEROID_SMALL, 120));
-		entities.push_back(new Asteroid(textures[4], 1000, bullet->getRotation() + rngRangeNeg(40, 75), asteroid->getPosition(), ASTEROID_SMALL, 120));
+		entities.push_back(new Asteroid(textures[4], 150, bullet->getRotation() + rngRangeNeg(40, 75), asteroid->getPosition(), ASTEROID_SMALL, 120));
+		entities.push_back(new Asteroid(textures[4], 150, bullet->getRotation() + rngRangeNeg(40, 75), asteroid->getPosition(), ASTEROID_SMALL, 120));
 		break;
 	default:
 		break;
@@ -220,6 +235,14 @@ void GameState::render(sf::RenderTarget* window)
 	{
 		window->draw(*i);
 		//window->draw(i->getHitBox());
+	}
+
+	if(livesVec.size() > 0)
+	{
+		for (auto& i : livesVec)
+		{
+			window->draw(i);
+		}
 	}
 }
 

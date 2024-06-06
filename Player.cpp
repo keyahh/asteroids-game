@@ -28,6 +28,15 @@ void Player::update(const float& dt, sf::RenderWindow* window, sf::View& view)
 			shootCDProgress = 0.0;
 		}
 	}
+	if (invulnerable)
+	{
+		iFrameProgress += dt;
+		if (iFrameProgress >= iFrames)
+		{
+			invulnerable = false;
+			iFrameProgress = 0.0f;
+		}
+	}
 
 	setOrigin({getLocalBounds().width / 2, getLocalBounds().height / 2});
 
@@ -94,6 +103,11 @@ const bool Player::checkShot() const
 	return shot;
 }
 
+const bool Player::getInvul() const
+{
+	return invulnerable;
+}
+
 void Player::setCanMove(bool flag)
 {
 	canMove = flag;
@@ -107,4 +121,10 @@ void Player::setCanShoot(bool flag)
 void Player::setShot(bool flag)
 {
 	shot = flag;
+}
+
+void Player::hit()
+{
+	invulnerable = true;
+	iFrameProgress = 0.0f;
 }

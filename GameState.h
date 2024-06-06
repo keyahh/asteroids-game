@@ -17,14 +17,14 @@ private:
 	sf::View playerCamera;
 	sf::RectangleShape marker;
 	std::vector<Entity*> entities;
-	//TextBox scoreBox;
+	std::vector<sf::CircleShape> livesVec;
 	sf::Text scoreBoard;
 	float asteroidSpawnTime = 2.5, asteroidSpawnTimeProgress = 4.5;
 
 	int rngRangeNeg(int min, int max);
 	void setNewGame();
 	void loadFromFile();
-
+	void setLives();
 	void setAsteroid(); //creates an asteroid
 	void summonAsteroids(); //summons a random amount of asteroids around the player's view
 	void asteroidsLoop(float dt);

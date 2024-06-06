@@ -19,6 +19,10 @@ Game::Game(const Game& game)
     *this = game;
 }
 
+Game::Game(sf::RenderWindow* window)
+{
+}
+
 
 void Game::eventHandler()
 {

@@ -8,9 +8,8 @@
 class Player : public Entity
 {
 private:
-	float shootCD = 0.2f;
-	float shootCDProgress = 0.0f;
-	bool canShoot = false, shot = false;
+	float shootCD = 0.2f, shootCDProgress = 0.0f, iFrames = 1.0f, iFrameProgress = 0.0f;
+	bool canShoot = false, shot = false, invulnerable = true;
 
 public:
 
@@ -25,11 +24,13 @@ public:
 	const float getSpeed() const;
 	const bool getCanMove() const;
 	const bool checkShot() const;
+	const bool getInvul() const;
 
 	void setCanMove(bool flag);
 	void setCanShoot(bool flag);
 	void setShot(bool flag);
 
+	void hit();
 };
 
 #endif
