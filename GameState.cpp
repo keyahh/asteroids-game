@@ -144,6 +144,9 @@ void GameState::summonAsteroids()
 void GameState::killAsteroid(Entity* asteroid, Entity* bullet)
 {
 	score += asteroid->getValue();
+
+	particles.push_back(new Explosion(textures[5], bullet->getPosition()));
+
 	switch (asteroid->getType())
 	{
 	case(ASTEROID_LARGE):
@@ -242,7 +245,7 @@ void GameState::collisionLoop()
 		{
 			if (i != j && entities[i]->getType() == BULLET && (entities[j]->getType() == ASTEROID_LARGE || entities[j]->getType() == ASTEROID_MEDIUM || entities[j]->getType() == ASTEROID_SMALL))
 			{
-				if (getDistance(entities[i], entities[j]) <= 20.0f)
+				if (getDistance(entities[i], entities[j]) <= 25.0f)
 				{
 					killAsteroid(entities[j], entities[i]);
 					entities[i]->kill();
@@ -283,6 +286,11 @@ void GameState::render(sf::RenderTarget* window)
 	{
 		window->draw(*i);
 		//window->draw(i->getHitBox());
+	}
+
+	for (auto& i : particles)
+	{
+		window->draw(*i);
 	}
 
 	if(livesVec.size() > 0)
