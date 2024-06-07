@@ -41,11 +41,11 @@ private:
 public:
 
 	GameState();
-	GameState(sf::RenderWindow* window, std::stack<State*>* states);
-	GameState(sf::RenderWindow* window, std::stack<State*>* states, sf::Font* font, bool readFromFile = false);
+	GameState(sf::RenderWindow* window, std::stack<State*>* states, bool readFromFile = false);
 
 	virtual void update(float dt);
 	virtual void render(sf::RenderTarget* window = nullptr);
+	virtual void eventHandler(sf::RenderWindow& window, sf::Event& event, float dt);
 	virtual void close();
 
 };

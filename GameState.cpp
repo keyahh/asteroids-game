@@ -4,14 +4,8 @@ GameState::GameState()
 {
 }
 
-GameState::GameState(sf::RenderWindow* window, std::stack<State*>* states)
-	: GameState(window, states, nullptr)
-{
-
-}
-
-GameState::GameState(sf::RenderWindow* window, std::stack<State*>* states, sf::Font* font, bool readFromFile)
-	: State(window, states, font)
+GameState::GameState(sf::RenderWindow* window, std::stack<State*>* states, bool readFromFile)
+	: State(window, states)
 {
 	srand(time(0));
 
@@ -26,7 +20,7 @@ GameState::GameState(sf::RenderWindow* window, std::stack<State*>* states, sf::F
 	assert(textures[4]->loadFromFile("images/entities/asteroid_small.png"));
 
 	//scoreBox.create("0", window, *font, { 100, 50 }, 40, sf::Color::White, sf::Color::Transparent);
-	scoreBoard.setFont(*font);
+	scoreBoard.setFont(Fonts::getFont(Fonts::OPEN_SANS_REGULAR));
 	scoreBoard.setFillColor(sf::Color::White);
 	scoreBoard.setString(std::to_string(score));
 
@@ -256,7 +250,7 @@ void GameState::collisionLoop()
 		}
 		if (!player->getInvul() && (entities[i]->getType() == ASTEROID_LARGE || entities[i]->getType() == ASTEROID_MEDIUM || entities[i]->getType() == ASTEROID_SMALL))
 		{
-			if (getDistance(player, entities[i]) <= 24.f)
+			if (getDistance(player, entities[i]) <= 35.f)
 			{
 				hitPlayer();
 			}
@@ -281,6 +275,15 @@ void GameState::render(sf::RenderTarget* window)
 		{
 			window->draw(i);
 		}
+	}
+}
+
+void GameState::eventHandler(sf::RenderWindow& window, sf::Event& event, float dt)
+{
+	if (player->checkShot())
+	{
+		entities.push_back(new Bullet(textures[1], player->getRotation(), player->getPosition(), true));
+		player->setShot(false);
 	}
 }
 

@@ -12,11 +12,11 @@ private:
 
 public:
 	TitleScreenState();
-	TitleScreenState(sf::RenderWindow* window, std::stack<State*>* states, sf::Font* font);
+	TitleScreenState(sf::RenderWindow* window, std::stack<State*>* states);
 
 	virtual void update(float dt);
 	virtual void render(sf::RenderTarget* window = nullptr);
-	virtual void keyEvents(const float& dt);
+	virtual void eventHandler(sf::RenderWindow& window, sf::Event& event, float dt);
 
 };
 

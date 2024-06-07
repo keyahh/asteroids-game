@@ -2,16 +2,16 @@
 
 Game::Game()
 {
-    assert(font.loadFromFile("opensans.ttf"));
+    //assert(font.loadFromFile("opensans.ttf"));
 
     out.open("game_save.txt", std::ios::app);
 
-    window.create(sf::VideoMode(800, 600, 32), "Pokemon");
-    window.setFramerateLimit(60);
+    //window.create(sf::VideoMode(800, 600, 32), "Pokemon");
+    //window.setFramerateLimit(60);
 
     //states.push(new GameState(&window, &states));
-    states.push(new MainMenuState(&window, &states, &font));
-    states.push(new TitleScreenState(&window, &states, &font));
+    states.push(new MainMenuState(window, &states));
+    states.push(new TitleScreenState(window, &states));
 }
 
 Game::Game(const Game& game)
@@ -21,22 +21,33 @@ Game::Game(const Game& game)
 
 Game::Game(sf::RenderWindow* window)
 {
+    Game::window = window;
+    out.open("game_save.txt", std::ios::app);
+
+    states.push(new MainMenuState(window, &states));
+    states.push(new TitleScreenState(window, &states));
 }
 
 
-void Game::eventHandler()
+void Game::eventHandler(sf::RenderWindow& window, sf::Event event, float dt)
 {
-    while (window.pollEvent(Game::event))
+    while (window.pollEvent(event))
     {
         if (event.type == sf::Event::Closed)
+        {
             window.close();
+        }
+
+        states.top()->eventHandler(window, event, dt);
     }
 }
 
 void Game::update()
 {
     dt = clock.restart().asSeconds();
-    eventHandler();
+
+    eventHandler(*window, event, dt);
+
     if (!states.empty())
     {
         states.top()->update(dt);
@@ -55,19 +66,19 @@ void Game::update()
 
 void Game::render()
 {
-    window.clear();
+    window->clear();
     
     if (!states.empty())
     {
-        states.top()->render(&window);//states are pointers
+        states.top()->render(window);//states are pointers
     }
 
-    window.display();
+    window->display();
 }
 
 void Game::run()
 {
-    while (window.isOpen()) 
+    while (window->isOpen()) 
     {
         update();
         render();
@@ -77,12 +88,12 @@ void Game::run()
 
 void Game::closeGame()
 {
-    window.close();
+    window->close();
 }
 
 Game& Game::operator=(const Game& game)
 {
-    //this->window = game.window;
+    this->window = game.window;
     this->states = game.states;
     return *this;
 }

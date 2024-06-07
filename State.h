@@ -12,8 +12,9 @@
 #include <assert.h>
 #include "TextBox.h"
 #include "Entity.h"
+#include "Fonts.h"
 
-class State
+class State : public sf::Drawable
 {
 private:
 
@@ -22,14 +23,10 @@ protected:
 	bool canClose = false;
 	sf::RenderWindow* window;
 	std::stack<State*>* states;
-	//std::ofstream* out;
-	//std::ifstream* in;
-	sf::Font* font;
 
 public:
 	State();
 	State(sf::RenderWindow* window, std::stack<State*>* states);
-	State(sf::RenderWindow* window, std::stack<State*>* states, sf::Font* font);
 
 	virtual bool getClose() const;
 	bool checkKeyPress() const;
@@ -37,8 +34,9 @@ public:
 
 	virtual void close();
 	virtual void update(float dt);
+	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	virtual void render(sf::RenderTarget* window);
-	virtual void keyEvents(const float& dt);
+	virtual void eventHandler(sf::RenderWindow& window, sf::Event& event, float dt);
 
 };
 

@@ -10,11 +10,6 @@ State::State(sf::RenderWindow* window, std::stack<State*>* states)
 {
 }
 
-State::State(sf::RenderWindow* window, std::stack<State*>* states, sf::Font* font)
-	: window(window), states(states), font(font)
-{
-}
-
 void State::close()
 {
 	canClose = true;
@@ -24,11 +19,15 @@ void State::update(float dt)
 {
 }
 
+void State::draw(sf::RenderTarget& target, sf::RenderStates states) const
+{
+}
+
 void State::render(sf::RenderTarget* window)
 {
 }
 
-void State::keyEvents(const float& dt)
+void State::eventHandler(sf::RenderWindow& window, sf::Event& event, float dt)
 {
 }
 

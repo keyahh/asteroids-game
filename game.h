@@ -8,22 +8,21 @@
 class Game
 {
 private:
-	sf::RenderWindow window;
 	sf::Event event;
 	sf::Clock clock;
-	sf::Font font;
+	sf::RenderWindow* window;
 	std::ofstream out;
 	std::ifstream in;
 	float dt = 0;
 
-	std::stack<State*> states; //State is abstract so it cant have actual objects instantiated, only pointers
+	std::stack<State*> states;
 
 public:
 	Game();
 	Game(const Game& game);
 	Game(sf::RenderWindow* window);
 
-	void eventHandler();
+	void eventHandler(sf::RenderWindow& window, sf::Event event, float dt);
 	void update();
 	void render();
 	void run();

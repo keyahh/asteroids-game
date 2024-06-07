@@ -5,8 +5,8 @@ TitleScreenState::TitleScreenState()
 {
 }
 
-TitleScreenState::TitleScreenState(sf::RenderWindow* window, std::stack<State*>* states, sf::Font* font)
-	: State(window, states, font)
+TitleScreenState::TitleScreenState(sf::RenderWindow* window, std::stack<State*>* states)
+	: State(window, states)
 {
 	//sf::Texture splashScreen;
 	//assert(splashScreen.loadFromFile("images/splashscreen.png"));
@@ -16,13 +16,13 @@ TitleScreenState::TitleScreenState(sf::RenderWindow* window, std::stack<State*>*
 	rect.setSize({ 800, 700 });
 	rect.setTexture(textures[0]);
 
-	startButton.create("Start Game", window, *font, {150,50}, 24, sf::Color::White, sf::Color::Black);
+	startButton.create("Start Game", window, Fonts::getFont(Fonts::OPEN_SANS_REGULAR), {150,50}, 24, sf::Color::White, sf::Color::Black);
 	startButton.setPosition({325, 350});
 }
 
 void TitleScreenState::update(float dt)
 {
-	keyEvents(dt);
+	//keyEvents(dt);
 	startButton.update(dt, window);
 
 	if (startButton.getClicked())
@@ -38,7 +38,7 @@ void TitleScreenState::render(sf::RenderTarget* window)
 	window->draw(startButton);
 }
 
-void TitleScreenState::keyEvents(const float& dt)
+void TitleScreenState::eventHandler(sf::RenderWindow& window, sf::Event& event, float dt)
 {
 	if (checkKeyPress())
 	{
