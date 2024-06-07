@@ -9,7 +9,7 @@ GameState::GameState(sf::RenderWindow* window, std::stack<State*>* states, bool 
 {
 	srand(time(0));
 
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 7; i++)
 	{
 		textures.push_back(new sf::Texture);
 	}
@@ -18,6 +18,8 @@ GameState::GameState(sf::RenderWindow* window, std::stack<State*>* states, bool 
 	assert(textures[2]->loadFromFile("images/entities/asteroid_large.png"));
 	assert(textures[3]->loadFromFile("images/entities/asteroid_medium.png"));
 	assert(textures[4]->loadFromFile("images/entities/asteroid_small.png"));
+	assert(textures[5]->loadFromFile("images/entities/explosion.png"));
+	assert(textures[6]->loadFromFile("images/entities/planets.png"));
 
 	//scoreBox.create("0", window, *font, { 100, 50 }, 40, sf::Color::White, sf::Color::Transparent);
 	scoreBoard.setFont(Fonts::getFont(Fonts::OPEN_SANS_REGULAR));
@@ -201,6 +203,7 @@ void GameState::update(float dt)
 		die();
 	}
 
+	particlesLoop(dt);
 	entityLifeCycleLoop(dt);
 	asteroidsLoop(dt);
 	collisionLoop();
@@ -254,6 +257,19 @@ void GameState::collisionLoop()
 			{
 				hitPlayer();
 			}
+		}
+	}
+}
+
+void GameState::particlesLoop(float dt)
+{
+	if (!particles.empty())
+	{
+		for (int i = particles.size() - 1; i >= 0; i--)
+		{
+			particles[i]->update(dt);
+			if (particles[i]->getCanKill())
+				particles.erase(particles.begin() + i);
 		}
 	}
 }

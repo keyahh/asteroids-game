@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "Bullet.h"
 #include "Asteroid.h"
+#include "Explosion.h"
 #include <cstdlib>
 #include <ctime>
 
@@ -17,6 +18,7 @@ private:
 	sf::View playerCamera;
 	sf::RectangleShape marker;
 	std::vector<Entity*> entities;
+	std::vector<Particle*> particles;
 	std::vector<sf::CircleShape> livesVec;
 	sf::Text scoreBoard;
 	float asteroidSpawnTime = 2.5, asteroidSpawnTimeProgress = 4.5;
@@ -30,6 +32,7 @@ private:
 	void summonAsteroids(); //summons a random amount of asteroids around the player's view
 	void asteroidsLoop(float dt);
 	void collisionLoop();
+	void particlesLoop(float dt);
 	void entityLifeCycleLoop(float dt);
 	void killAsteroid(Entity* asteroid, Entity* bullet);
 
