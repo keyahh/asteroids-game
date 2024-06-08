@@ -14,11 +14,11 @@ Entity::Entity(sf::Texture* texture, int rows, int cols, EntityType type)
 {
 }
 
-void Entity::setAnimation(int row)
+void Entity::setAnimation(int row, int cols)
 {
 	std::vector<Frame> frames;
 	float x = 0, y = row * getRect().height;
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < cols; i++)
 	{
 		frames.push_back(Frame({ x, y }, 0.15));
 		x += getRect().width;

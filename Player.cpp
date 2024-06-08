@@ -17,7 +17,7 @@ Player::Player(sf::Texture* texture)
 	speed = 2.f;
 }
 
-void Player::update(const float& dt, sf::RenderWindow* window, sf::View& view)
+void Player::update(float dt, sf::RenderWindow* window, sf::View& view)
 {
 	if (!canShoot) 
 	{//shooting cool down

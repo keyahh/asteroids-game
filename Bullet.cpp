@@ -13,7 +13,7 @@ Bullet::Bullet(sf::Texture* texture, float rotation, const sf::Vector2f& startPo
 	setRotation(rotation);
 }
 
-void Bullet::update(const float& dt, sf::RenderWindow* window, sf::View& view)
+void Bullet::update(float dt, sf::RenderWindow* window, sf::View& view)
 {
 	setOrigin({ getLocalBounds().width / 2, getLocalBounds().height / 2 });
 	travelTime += dt;

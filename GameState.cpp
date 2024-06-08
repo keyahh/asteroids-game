@@ -35,6 +35,8 @@ GameState::GameState(sf::RenderWindow* window, std::stack<State*>* states, bool 
 	{
 		setNewGame();
 	}
+
+	entities.push_back(new Planet(Textures::getTexture(Textures::PLANETS), {0.f,0.f}));
 }
 
 void GameState::setNewGame()
@@ -209,7 +211,7 @@ void GameState::entityLifeCycleLoop(float dt)
 	{
 		entities[i]->update(dt, window, playerCamera);
 
-		if (getDistance(player, entities[i]) >= 600) //remove asteroids and bullets that are too far away from player
+		if (getDistance(player, entities[i]) >= 600 && entities[i]->getType() != EntityType::PLANET) //remove asteroids and bullets that are too far away from player
 			entities[i]->kill();
 
 		if (entities[i]->getCanKill()) //destroy entities marked to be killed

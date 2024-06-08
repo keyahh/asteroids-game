@@ -6,6 +6,7 @@
 #include "Bullet.h"
 #include "Asteroid.h"
 #include "Explosion.h"
+#include "Planet.h"
 #include "MainMenuState.h"
 #include <cstdlib>
 #include <ctime>
