@@ -42,6 +42,7 @@ private:
 	void particlesLoop(float dt);
 	void entityLifeCycleLoop(float dt);
 	void killAsteroid(Entity* asteroid, Entity* bullet);
+	void hitPlanet(Entity* planet, Entity* bullet);
 
 	float getDistance(Entity* entity1, Entity* entity2);
 

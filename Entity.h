@@ -24,6 +24,7 @@ public:
 	void move(const sf::Vector2f& vec, float dt);
 	virtual void update(float dt, sf::RenderWindow* window, sf::View& view) = 0;
 	virtual const int getValue() const = 0;
+	virtual void hit();
 
 	const bool getCanKill() const;
 	void kill();

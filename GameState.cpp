@@ -173,6 +173,18 @@ void GameState::killAsteroid(Entity* asteroid, Entity* bullet)
 	asteroid->kill();
 }
 
+void GameState::hitPlanet(Entity* planet, Entity* bullet)
+{
+	planet->hit();
+	if (planet->getCanKill())
+	{
+		//big explosion
+		score += planet->getValue();
+	}
+
+	particles.push_back(new Explosion(Textures::getTexture(Textures::EXPLOSION), bullet->getPosition()));
+}
+
 float GameState::getDistance(Entity* entity1, Entity* entity2)
 {
 	return std::sqrtf(pow(entity2->getPosition().x - entity1->getPosition().x, 2) + pow(entity2->getPosition().y - entity1->getPosition().y, 2));
@@ -256,6 +268,14 @@ void GameState::collisionLoop()
 				if (getDistance(entities[i], entities[j]) <= 25.0f)
 				{
 					killAsteroid(entities[j], entities[i]);
+					entities[i]->kill();
+				}
+			}
+			else if (i != j && entities[i]->getType() == BULLET && entities[j]->getType() == PLANET)
+			{
+				if (getDistance(entities[i], entities[j]) <= entities[j]->getGlobalBounds().width / 3)
+				{
+					hitPlanet(entities[j], entities[i]);
 					entities[i]->kill();
 				}
 			}
