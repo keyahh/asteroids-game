@@ -13,6 +13,11 @@ GameState::GameState(sf::RenderWindow* window, std::stack<State*>* states, bool 
 	scoreBoard.setFillColor(sf::Color::White);
 	scoreBoard.setString(std::to_string(score));
 
+	deathText.setFont(Fonts::getFont(Fonts::OPEN_SANS_BOLD));
+	deathText.setFillColor(sf::Color::Red);
+	deathText.setCharacterSize(64);
+	deathText.setString("You Died");
+
 	player = new Player(Textures::getTexture(Textures::PLAYER));
 
 	marker.setSize({ 50,50 });
@@ -137,12 +142,12 @@ void GameState::killAsteroid(Entity* asteroid, Entity* bullet)
 	switch (asteroid->getType())
 	{
 	case(ASTEROID_LARGE):
-		entities.push_back(new Asteroid(Textures::getTexture(Textures::ASTEROID_MEDIUM), 100, bullet->getRotation() + rngRangeNeg(40, 75), asteroid->getPosition(), ASTEROID_MEDIUM, 100));
-		entities.push_back(new Asteroid(Textures::getTexture(Textures::ASTEROID_MEDIUM), 100, bullet->getRotation() + rngRangeNeg(40, 75), asteroid->getPosition(), ASTEROID_MEDIUM, 100));
+		entities.push_back(new Asteroid(Textures::getTexture(Textures::ASTEROID_MEDIUM), 100, bullet->getRotation() + rngRangeNeg(40, 70), asteroid->getPosition(), ASTEROID_MEDIUM, 125));
+		entities.push_back(new Asteroid(Textures::getTexture(Textures::ASTEROID_MEDIUM), 100, bullet->getRotation() + rngRangeNeg(40, 70), asteroid->getPosition(), ASTEROID_MEDIUM, 125));
 		break;
 	case(ASTEROID_MEDIUM):
-		entities.push_back(new Asteroid(Textures::getTexture(Textures::ASTEROID_SMALL), 150, bullet->getRotation() + rngRangeNeg(40, 75), asteroid->getPosition(), ASTEROID_SMALL, 120));
-		entities.push_back(new Asteroid(Textures::getTexture(Textures::ASTEROID_SMALL), 150, bullet->getRotation() + rngRangeNeg(40, 75), asteroid->getPosition(), ASTEROID_SMALL, 120));
+		entities.push_back(new Asteroid(Textures::getTexture(Textures::ASTEROID_SMALL), 150, bullet->getRotation() + rngRangeNeg(40, 70), asteroid->getPosition(), ASTEROID_SMALL, 160));
+		entities.push_back(new Asteroid(Textures::getTexture(Textures::ASTEROID_SMALL), 150, bullet->getRotation() + rngRangeNeg(40, 70), asteroid->getPosition(), ASTEROID_SMALL, 160));
 		break;
 	default:
 		break;
@@ -173,7 +178,7 @@ void GameState::hitPlayer()
 void GameState::die()
 {
 	player->setCanMove(false);
-	//add deat screen
+	deathText.setPosition({player->getPosition().x - deathText.getGlobalBounds().width / 2, player->getPosition().y - 150.f});
 }
 
 
@@ -284,6 +289,10 @@ void GameState::render(sf::RenderTarget* window)
 		{
 			window->draw(i);
 		}
+	}
+	if (lives <= 0)
+	{
+		window->draw(deathText);
 	}
 }
 
