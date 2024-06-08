@@ -13,20 +13,21 @@ GameState::GameState(sf::RenderWindow* window, std::stack<State*>* states, bool 
 	{
 		textures.push_back(new sf::Texture);
 	}
-	assert(textures[0]->loadFromFile("images/entities/player.png"));
+	/*assert(textures[0]->loadFromFile("images/entities/player.png"));
 	assert(textures[1]->loadFromFile("images/entities/bullet.png"));
 	assert(textures[2]->loadFromFile("images/entities/asteroid_large.png"));
 	assert(textures[3]->loadFromFile("images/entities/asteroid_medium.png"));
 	assert(textures[4]->loadFromFile("images/entities/asteroid_small.png"));
 	assert(textures[5]->loadFromFile("images/entities/explosion.png"));
-	assert(textures[6]->loadFromFile("images/entities/planets.png"));
+	assert(textures[6]->loadFromFile("images/entities/planets.png"));*/
 
 	//scoreBox.create("0", window, *font, { 100, 50 }, 40, sf::Color::White, sf::Color::Transparent);
 	scoreBoard.setFont(Fonts::getFont(Fonts::OPEN_SANS_REGULAR));
 	scoreBoard.setFillColor(sf::Color::White);
 	scoreBoard.setString(std::to_string(score));
 
-	player = new Player(textures[0]);
+	//player = new Player(textures[0]);
+	player = new Player(Textures::getTexture(Textures::PLAYER));
 
 	marker.setSize({ 50,50 });
 	marker.setFillColor(sf::Color::Red);
@@ -130,7 +131,7 @@ void GameState::setAsteroid()
 	float randXPos = player->getPosition().x + rngRangeNeg(200, 300);
 	float randYPos = player->getPosition().y + rngRangeNeg(200, 300);
 
-	entities.push_back(new Asteroid(textures[2], 50, rand() % 360, {randXPos, randYPos }));
+	entities.push_back(new Asteroid(Textures::getTexture(Textures::ASTEROID_LARGE), 50, rand() % 360, {randXPos, randYPos }));
 }
 
 void GameState::summonAsteroids()
@@ -145,17 +146,17 @@ void GameState::killAsteroid(Entity* asteroid, Entity* bullet)
 {
 	score += asteroid->getValue();
 
-	particles.push_back(new Explosion(textures[5], bullet->getPosition()));
+	particles.push_back(new Explosion(Textures::getTexture(Textures::EXPLOSION), bullet->getPosition()));
 
 	switch (asteroid->getType())
 	{
 	case(ASTEROID_LARGE):
-		entities.push_back(new Asteroid(textures[3], 100, bullet->getRotation() + rngRangeNeg(40, 75), asteroid->getPosition(), ASTEROID_MEDIUM, 100));
-		entities.push_back(new Asteroid(textures[3], 100, bullet->getRotation() + rngRangeNeg(40, 75), asteroid->getPosition(), ASTEROID_MEDIUM, 100));
+		entities.push_back(new Asteroid(Textures::getTexture(Textures::ASTEROID_MEDIUM), 100, bullet->getRotation() + rngRangeNeg(40, 75), asteroid->getPosition(), ASTEROID_MEDIUM, 100));
+		entities.push_back(new Asteroid(Textures::getTexture(Textures::ASTEROID_MEDIUM), 100, bullet->getRotation() + rngRangeNeg(40, 75), asteroid->getPosition(), ASTEROID_MEDIUM, 100));
 		break;
 	case(ASTEROID_MEDIUM):
-		entities.push_back(new Asteroid(textures[4], 150, bullet->getRotation() + rngRangeNeg(40, 75), asteroid->getPosition(), ASTEROID_SMALL, 120));
-		entities.push_back(new Asteroid(textures[4], 150, bullet->getRotation() + rngRangeNeg(40, 75), asteroid->getPosition(), ASTEROID_SMALL, 120));
+		entities.push_back(new Asteroid(Textures::getTexture(Textures::ASTEROID_SMALL), 150, bullet->getRotation() + rngRangeNeg(40, 75), asteroid->getPosition(), ASTEROID_SMALL, 120));
+		entities.push_back(new Asteroid(Textures::getTexture(Textures::ASTEROID_SMALL), 150, bullet->getRotation() + rngRangeNeg(40, 75), asteroid->getPosition(), ASTEROID_SMALL, 120));
 		break;
 	default:
 		break;
@@ -196,11 +197,6 @@ void GameState::update(float dt)
 	player->update(dt, window, playerCamera);
 	moveLives();
 
-	if (player->checkShot())
-	{
-		entities.push_back(new Bullet(textures[1], player->getRotation(), player->getPosition(), true));
-		player->setShot(false);
-	}
 	if (lives <= 0)
 	{
 		die();
@@ -306,7 +302,7 @@ void GameState::eventHandler(sf::RenderWindow& window, sf::Event& event, float d
 {
 	if (player->checkShot())
 	{
-		entities.push_back(new Bullet(textures[1], player->getRotation(), player->getPosition(), true));
+		entities.push_back(new Bullet(Textures::getTexture(Textures::BULLET), player->getRotation(), player->getPosition(), true));
 		player->setShot(false);
 	}
 }

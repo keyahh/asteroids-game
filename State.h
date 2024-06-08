@@ -13,6 +13,7 @@
 #include "TextBox.h"
 #include "Entity.h"
 #include "Fonts.h"
+#include "Textures.h"
 
 class State : public sf::Drawable
 {
