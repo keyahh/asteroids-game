@@ -33,6 +33,8 @@ private:
 	void loadFromFile();
 	void setLives();
 	void moveLives();
+	void setPlanet();
+	void summonPlanets();
 	void setAsteroid(); //creates an asteroid
 	void summonAsteroids(); //summons a random amount of asteroids around the player's view
 	void asteroidsLoop(float dt);

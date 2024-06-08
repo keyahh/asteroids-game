@@ -21,7 +21,7 @@ Asteroid::Asteroid(sf::Texture* texture, int value, float rotation, const sf::Ve
 {
 	speed = rand() % (baseSpeed * 2 - baseSpeed + 1) + baseSpeed;
 	setPosition(startPos);
-	setScale(3,3);
+	setScale(3.f,3.f);
 }
 
 void Asteroid::update(float dt, sf::RenderWindow* window, sf::View& view)

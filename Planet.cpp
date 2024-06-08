@@ -1,11 +1,14 @@
 #include "Planet.h"
 
-Planet::Planet(sf::Texture* texture, const sf::Vector2f& startPos)
+Planet::Planet(sf::Texture* texture, const sf::Vector2f& startPos, int row, int col)
 	: Entity(texture, 3, 4, EntityType::PLANET)
 {
-	value = 2000;
-	setRowCol(rand() % 12, rand() % 12);
+	value = 5000;
+	setRowCol(row, col);
 	setPosition(startPos);
+	float scale = rand() % 6 + 7;
+	setScale(scale, scale);
+	setOrigin({ getLocalBounds().width / 2, getLocalBounds().height / 2 });
 }
 
 void Planet::update(float dt, sf::RenderWindow* window, sf::View& view)

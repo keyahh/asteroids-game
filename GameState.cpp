@@ -26,6 +26,7 @@ GameState::GameState(sf::RenderWindow* window, std::stack<State*>* states, bool 
 
 	scoreBoard.setPosition({ player->getPosition().x - static_cast<float>(window->getSize().x / 2) + 10, player->getPosition().y - static_cast<float>(window->getSize().y / 2) + 10 });
 
+	setPlanet();
 
 	if (readFromFile)
 	{
@@ -36,7 +37,7 @@ GameState::GameState(sf::RenderWindow* window, std::stack<State*>* states, bool 
 		setNewGame();
 	}
 
-	entities.push_back(new Planet(Textures::getTexture(Textures::PLANETS), {0.f,0.f}));
+	summonPlanets();
 }
 
 void GameState::setNewGame()
@@ -117,6 +118,21 @@ int GameState::rngRangeNeg(int min, int max)
 	}
 	return x * -1;
 
+}
+
+void GameState::setPlanet()
+{
+	float randXPos = rngRangeNeg(300, 2000);
+	float randYPos = rngRangeNeg(300, 2000);
+	entities.push_back(new Planet(Textures::getTexture(Textures::PLANETS), {randXPos, randYPos}, rand() % 3, rand() % 4));
+}
+
+void GameState::summonPlanets()
+{
+	for (int i = 0; i < 20; i++)
+	{
+		setPlanet();
+	}
 }
 
 void GameState::setAsteroid()
