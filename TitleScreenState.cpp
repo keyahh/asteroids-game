@@ -35,8 +35,8 @@ void TitleScreenState::render(sf::RenderTarget* window)
 
 void TitleScreenState::eventHandler(sf::RenderWindow& window, sf::Event& event, float dt)
 {
-	if (checkKeyPress())
+	/*if (checkKeyPress())
 	{
 		close();
-	}
+	}*/
 }

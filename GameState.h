@@ -6,6 +6,7 @@
 #include "Bullet.h"
 #include "Asteroid.h"
 #include "Explosion.h"
+#include "MainMenuState.h"
 #include <cstdlib>
 #include <ctime>
 
@@ -20,7 +21,10 @@ private:
 	std::vector<Entity*> entities;
 	std::vector<Particle*> particles;
 	std::vector<sf::CircleShape> livesVec;
+
 	sf::Text scoreBoard;
+	sf::Text deathText;
+
 	float asteroidSpawnTime = 2.5, asteroidSpawnTimeProgress = 4.5;
 
 	int rngRangeNeg(int min, int max);
@@ -40,6 +44,9 @@ private:
 
 	void hitPlayer();
 	void die();
+
+	void saveGame();
+	void clearEntities();
 
 public:
 

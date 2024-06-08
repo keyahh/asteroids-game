@@ -66,4 +66,11 @@ void MainMenuState::eventHandler(sf::RenderWindow& window, sf::Event& event, flo
 	{
 		setNewGame();
 	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+	{
+		std::cout << "escape\n";
+		//close();
+		states->push(new TitleScreenState(this->window, this->states));
+	}
 }

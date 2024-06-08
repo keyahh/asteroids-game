@@ -159,8 +159,10 @@ void GameState::hitPlayer()
 {
 	player->hit();
 	lives--;
-	livesVec.pop_back();
-	//std::cout << "hit\n lives: " << lives << std::endl;
+	if (!livesVec.empty())
+	{
+		livesVec.pop_back();
+	}
 
 	if (lives <= 0)
 	{
@@ -173,6 +175,7 @@ void GameState::die()
 	player->setCanMove(false);
 	//add deat screen
 }
+
 
 void GameState::update(float dt)
 {
@@ -291,9 +294,18 @@ void GameState::eventHandler(sf::RenderWindow& window, sf::Event& event, float d
 		entities.push_back(new Bullet(Textures::getTexture(Textures::BULLET), player->getRotation(), player->getPosition(), true));
 		player->setShot(false);
 	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+	{
+		saveGame();
+		clearEntities();
+		states->pop();
+		window.setView(window.getDefaultView());
+		states->push(new MainMenuState(this->window, this->states));
+		states->push(new TitleScreenState(this->window, this->states));
+	}
 }
 
-void GameState::close()//save game
+void GameState::saveGame()
 {
 	std::ofstream out("game_save.txt", std::ios::trunc); //clears save and rewrites te whole thing
 	out << player->getPosition().x << '\n';
@@ -301,11 +313,26 @@ void GameState::close()//save game
 	out << score << '\n';
 	out << lives << '\n';
 	out.close();
+}
 
+void GameState::clearEntities()
+{
 	for (int i = entities.size() - 1; i >= 0; i--)
 	{
 		delete entities[i];
 	}
+	for (int i = particles.size() - 1; i >= 0; i--)
+	{
+		delete particles[i];
+	}
+
 	delete player;
+}
+
+void GameState::close()//save game
+{
+	saveGame();
+	clearEntities();
+
 	canClose = true;
 }
