@@ -9,24 +9,10 @@ GameState::GameState(sf::RenderWindow* window, std::stack<State*>* states, bool 
 {
 	srand(time(0));
 
-	for (int i = 0; i < 7; i++)
-	{
-		textures.push_back(new sf::Texture);
-	}
-	/*assert(textures[0]->loadFromFile("images/entities/player.png"));
-	assert(textures[1]->loadFromFile("images/entities/bullet.png"));
-	assert(textures[2]->loadFromFile("images/entities/asteroid_large.png"));
-	assert(textures[3]->loadFromFile("images/entities/asteroid_medium.png"));
-	assert(textures[4]->loadFromFile("images/entities/asteroid_small.png"));
-	assert(textures[5]->loadFromFile("images/entities/explosion.png"));
-	assert(textures[6]->loadFromFile("images/entities/planets.png"));*/
-
-	//scoreBox.create("0", window, *font, { 100, 50 }, 40, sf::Color::White, sf::Color::Transparent);
 	scoreBoard.setFont(Fonts::getFont(Fonts::OPEN_SANS_REGULAR));
 	scoreBoard.setFillColor(sf::Color::White);
 	scoreBoard.setString(std::to_string(score));
 
-	//player = new Player(textures[0]);
 	player = new Player(Textures::getTexture(Textures::PLAYER));
 
 	marker.setSize({ 50,50 });

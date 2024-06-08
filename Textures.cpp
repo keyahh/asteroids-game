@@ -37,5 +37,11 @@ std::string Textures::getTexturePath(textureEnum texture)
     case PLANETS:
         return "images/entities/planets.png";
         break;
+    case SPLASH_SCREEN:
+        return "images/splashscreen.png";
+        break;
+    case MENU_ART:
+        return "images/art.png";
+        break;
     }
 }

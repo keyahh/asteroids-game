@@ -14,7 +14,9 @@ public:
         ASTEROID_MEDIUM,
         ASTEROID_SMALL,
         EXPLOSION,
-        PLANETS
+        PLANETS,
+        SPLASH_SCREEN,
+        MENU_ART
     };
     static sf::Texture* getTexture(textureEnum texture);
 private:

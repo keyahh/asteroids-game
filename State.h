@@ -20,7 +20,7 @@ class State : public sf::Drawable
 private:
 
 protected:
-	std::vector<sf::Texture*> textures;
+	//std::vector<sf::Texture*> textures;
 	bool canClose = false;
 	sf::RenderWindow* window;
 	std::stack<State*>* states;

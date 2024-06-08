@@ -8,13 +8,8 @@ TitleScreenState::TitleScreenState()
 TitleScreenState::TitleScreenState(sf::RenderWindow* window, std::stack<State*>* states)
 	: State(window, states)
 {
-	//sf::Texture splashScreen;
-	//assert(splashScreen.loadFromFile("images/splashscreen.png"));
-	//textures.push_back(splashScreen);
-	textures.push_back(new sf::Texture);
-	textures[0]->loadFromFile("images/splashscreen.png");
 	rect.setSize({ 800, 700 });
-	rect.setTexture(textures[0]);
+	rect.setTexture(Textures::getTexture(Textures::SPLASH_SCREEN));
 
 	startButton.create("Start Game", window, Fonts::getFont(Fonts::OPEN_SANS_REGULAR), {150,50}, 24, sf::Color::White, sf::Color::Black);
 	startButton.setPosition({325, 350});

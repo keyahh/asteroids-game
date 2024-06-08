@@ -8,12 +8,8 @@ MainMenuState::MainMenuState()
 MainMenuState::MainMenuState(sf::RenderWindow* window, std::stack<State*>* states)
 	: State(window, states)
 {
-
-	textures.push_back(new sf::Texture);
-	textures[0]->loadFromFile("images/art.png");
-
 	rect.setSize({ 280, 280 });
-	rect.setTexture(textures[0]);
+	rect.setTexture(Textures::getTexture(Textures::MENU_ART));
 	rect.setPosition({ 400, 150 });
 
 	continueGame.create("Continue Game", window, Fonts::getFont(Fonts::OPEN_SANS_REGULAR), { 250,50 }, 24, sf::Color::Black, sf::Color::White);
