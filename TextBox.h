@@ -5,7 +5,6 @@
 #include <string>
 #include <iostream>
 #include "Helper/MouseEvents.h"
-#include "Helper/Position.h"
 
 class TextBox : public sf::RectangleShape
 {

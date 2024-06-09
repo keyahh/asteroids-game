@@ -30,10 +30,7 @@
     <ClInclude Include="Frame.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="GameState.h" />
-    <ClInclude Include="Helper\Button.h" />
-    <ClInclude Include="Helper\ColorPalette.h" />
     <ClInclude Include="Helper\MouseEvents.h" />
-    <ClInclude Include="Helper\Position.h" />
     <ClInclude Include="MainMenuState.h" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="Planet.h" />
@@ -55,9 +52,7 @@
     <ClCompile Include="Frame.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="GameState.cpp" />
-    <ClCompile Include="Helper\Button.cpp" />
     <ClCompile Include="Helper\MouseEvents.cpp" />
-    <ClCompile Include="Helper\Position.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenuState.cpp" />
     <ClCompile Include="Particle.cpp" />

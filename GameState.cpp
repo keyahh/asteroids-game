@@ -214,7 +214,6 @@ void GameState::die()
 void GameState::update(float dt)
 {
 	scoreBoard.setString(std::to_string(score));
-	//scoreBoard.setPosition({ player->getPosition().x - static_cast<float>(window->getSize().x / 2) + 10, player->getPosition().y - static_cast<float>(window->getSize().y / 2) + 10 });
 	scoreBoard.setPosition({ player->getPosition().x - windowSize.x / 2 + 10, player->getPosition().y - windowSize.y / 2 + 10 });
 	playerCamera.setCenter(player->getPosition());
 
@@ -381,7 +380,7 @@ void GameState::clearEntities()
 	delete player;
 }
 
-void GameState::close()//save game
+void GameState::close()
 {
 	saveGame();
 	clearEntities();
