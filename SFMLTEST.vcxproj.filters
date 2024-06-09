@@ -84,6 +84,9 @@
     <ClInclude Include="Helper\MouseEvents.h">
       <Filter>Header Files\Helper</Filter>
     </ClInclude>
+    <ClInclude Include="BigExplosion.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AnimatedSpriteSheet.cpp">
@@ -147,6 +150,9 @@
       <Filter>Source Files\Helper</Filter>
     </ClCompile>
     <ClCompile Include="TextBox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BigExplosion.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

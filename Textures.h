@@ -16,7 +16,8 @@ public:
         EXPLOSION,
         PLANETS,
         SPLASH_SCREEN,
-        MENU_ART
+        MENU_ART,
+        BIG_EXPLOSION
     };
     static sf::Texture* getTexture(textureEnum texture);
 private:

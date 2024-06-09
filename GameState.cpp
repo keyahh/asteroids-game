@@ -178,6 +178,7 @@ void GameState::hitPlanet(Entity* planet, Entity* bullet)
 	if (planet->getCanKill())
 	{
 		//big explosion
+		particles.push_back(new BigExplosion(Textures::getTexture(Textures::BIG_EXPLOSION), { planet->getPosition().x - 175, planet->getPosition().y - 175 }));
 		score += planet->getValue();
 	}
 

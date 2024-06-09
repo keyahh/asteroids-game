@@ -43,5 +43,8 @@ std::string Textures::getTexturePath(textureEnum texture)
     case MENU_ART:
         return "images/art.png";
         break;
+    case BIG_EXPLOSION:
+        return "images/entities/bigexplosion.png";
+        break;
     }
 }
