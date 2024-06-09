@@ -14,29 +14,29 @@
 #include "Entity.h"
 #include "Fonts.h"
 #include "Textures.h"
+#include "Helper/Button.h"
 
-class State : public sf::Drawable
+class State
 {
 private:
 
 protected:
-	//std::vector<sf::Texture*> textures;
 	bool canClose = false;
-	sf::RenderWindow* window;
 	std::stack<State*>* states;
+	sf::Vector2f windowSize;
 
 public:
 	State();
-	State(sf::RenderWindow* window, std::stack<State*>* states);
+	State(std::stack<State*>* states, const sf::Vector2f& windowSize);
 
-	virtual bool getClose() const;
+	bool getClose() const;
 	bool checkKeyPress() const;
 	bool checkKeyPress(const sf::Keyboard::Key& key) const;
 
 	virtual void close();
+	virtual void render(sf::RenderWindow& window, sf::RenderStates states) = 0;
+
 	virtual void update(float dt);
-	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-	virtual void render(sf::RenderTarget* window = nullptr);
 	virtual void eventHandler(sf::RenderWindow& window, sf::Event& event, float dt);
 
 };

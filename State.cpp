@@ -1,12 +1,12 @@
 #include "state.h"
 
 State::State()
-	: window(nullptr), states(nullptr)
+	: windowSize({0.f,0.f}), states(nullptr)
 {
 }
 
-State::State(sf::RenderWindow* window, std::stack<State*>* states)
-	: window(window), states(states)
+State::State(std::stack<State*>* states, const sf::Vector2f& windowSize)
+	: states(states), windowSize(windowSize)
 {
 }
 
@@ -19,13 +19,6 @@ void State::update(float dt)
 {
 }
 
-void State::draw(sf::RenderTarget& target, sf::RenderStates states) const
-{
-}
-
-void State::render(sf::RenderTarget* window)
-{
-}
 
 void State::eventHandler(sf::RenderWindow& window, sf::Event& event, float dt)
 {

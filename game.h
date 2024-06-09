@@ -13,6 +13,7 @@ private:
 	sf::RenderWindow* window;
 	std::ofstream out;
 	std::ifstream in;
+	sf::RenderStates renderStates;
 	float dt = 0;
 
 	std::stack<State*> states;

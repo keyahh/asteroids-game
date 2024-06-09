@@ -32,6 +32,14 @@ void Asteroid::update(float dt, sf::RenderWindow* window, sf::View& view)
 	move(direction, dt);
 }
 
+void Asteroid::update(float dt, sf::RenderWindow& window, sf::View& view)
+{
+	setOrigin({ getLocalBounds().width / 2, getLocalBounds().height / 2 });
+	double radian = (rotation - 90) * (3.141593 / 180);
+	sf::Vector2f direction = { static_cast<float>(cos(radian)), static_cast<float>(sin(radian)) };
+	move(direction, dt);
+}
+
 const float Asteroid::getRotation() const
 {
 	return rotation;

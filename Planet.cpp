@@ -15,6 +15,10 @@ void Planet::update(float dt, sf::RenderWindow* window, sf::View& view)
 {
 }
 
+void Planet::update(float dt, sf::RenderWindow& window, sf::View& view)
+{
+}
+
 const int Planet::getValue() const
 {
 	return value;

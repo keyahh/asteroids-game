@@ -18,10 +18,10 @@ private:
 
 public:
 	MainMenuState();
-	MainMenuState(sf::RenderWindow* window, std::stack<State*>* states);
+	MainMenuState(const sf::Vector2f& windowSize, std::stack<State*>* states);
 
 	virtual void update(float dt);
-	virtual void render(sf::RenderTarget* window = nullptr);
+	virtual void render(sf::RenderWindow& window, sf::RenderStates states);
 	virtual void eventHandler(sf::RenderWindow& window, sf::Event& event, float dt);
 };
 

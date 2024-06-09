@@ -26,7 +26,7 @@ private:
 	sf::Text scoreBoard;
 	sf::Text deathText;
 
-	float asteroidSpawnTime = 2.5, asteroidSpawnTimeProgress = 4.5;
+	float asteroidSpawnTime = 2.5, asteroidSpawnTimeProgress = 4.5, dt;
 
 	int rngRangeNeg(int min, int max);
 	void setNewGame();
@@ -55,10 +55,11 @@ private:
 public:
 
 	GameState();
-	GameState(sf::RenderWindow* window, std::stack<State*>* states, bool readFromFile = false);
+	GameState(const sf::Vector2f& windowSize, std::stack<State*>* states, bool readFromFile = false);
 
 	virtual void update(float dt);
-	virtual void render(sf::RenderTarget* window = nullptr);
+	virtual void render(sf::RenderWindow& window, sf::RenderStates states);
+
 	virtual void eventHandler(sf::RenderWindow& window, sf::Event& event, float dt);
 	virtual void close();
 

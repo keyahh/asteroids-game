@@ -22,7 +22,8 @@ public:
 	Entity(sf::Texture* texture, int rows, int cols, EntityType type);
 
 	void move(const sf::Vector2f& vec, float dt);
-	virtual void update(float dt, sf::RenderWindow* window, sf::View& view) = 0;
+	virtual void update(float dt, sf::RenderWindow* window, sf::View& view);
+	virtual void update(float dt, sf::RenderWindow& window, sf::View& view);
 	virtual const int getValue() const = 0;
 	virtual void hit();
 

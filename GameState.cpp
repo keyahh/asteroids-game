@@ -4,8 +4,8 @@ GameState::GameState()
 {
 }
 
-GameState::GameState(sf::RenderWindow* window, std::stack<State*>* states, bool readFromFile)
-	: State(window, states)
+GameState::GameState(const sf::Vector2f& windowSize, std::stack<State*>* states, bool readFromFile)
+	: State(states, windowSize)
 {
 	srand(time(0));
 
@@ -24,9 +24,7 @@ GameState::GameState(sf::RenderWindow* window, std::stack<State*>* states, bool 
 	marker.setFillColor(sf::Color::Red);
 	marker.setPosition({ 100, 100 });
 
-	scoreBoard.setPosition({ player->getPosition().x - static_cast<float>(window->getSize().x / 2) + 10, player->getPosition().y - static_cast<float>(window->getSize().y / 2) + 10 });
-
-	setPlanet();
+	scoreBoard.setPosition({ player->getPosition().x - windowSize.x / 2 + 10, player->getPosition().y - windowSize.y / 2 + 10 });
 
 	if (readFromFile)
 	{
@@ -53,7 +51,8 @@ void GameState::setNewGame()
 	out << "0\n";
 	out.close();
 
-	playerCamera.reset((sf::FloatRect(0, 0, window->getSize().x, window->getSize().y)));
+	//playerCamera.reset((sf::FloatRect(0, 0, window->getSize().x, window->getSize().y)));
+	playerCamera.reset((sf::FloatRect(0, 0, windowSize.x, windowSize.y)));
 
 	setLives();
 }
@@ -76,7 +75,8 @@ void GameState::loadFromFile()
 
 	sf::Vector2f playerPos = { x, y };
 	player->setPosition(playerPos);
-	playerCamera.reset(sf::FloatRect(x, y, static_cast<float>(window->getSize().x), static_cast<float>(window->getSize().y)));
+	//playerCamera.reset(sf::FloatRect(x, y, static_cast<float>(window->getSize().x), static_cast<float>(window->getSize().y)));
+	playerCamera.reset(sf::FloatRect(x, y, windowSize.x, windowSize.y));
 	playerCamera.setCenter(playerPos);
 
 	setLives();
@@ -96,7 +96,6 @@ void GameState::setLives()
 
 void GameState::moveLives()
 {
-	//sf::Vector2f startPos = { player->getPosition().x - static_cast<float>(window->getSize().x) / 2.1f, player->getPosition().y - static_cast<float>(window->getSize().y) / 2.1f };
 	sf::Vector2f startPos = { scoreBoard.getPosition().x, scoreBoard.getPosition().y + 50};
 	if (!livesVec.empty())
 	{
@@ -215,12 +214,16 @@ void GameState::die()
 void GameState::update(float dt)
 {
 	scoreBoard.setString(std::to_string(score));
-	scoreBoard.setPosition({ player->getPosition().x - static_cast<float>(window->getSize().x / 2) + 10, player->getPosition().y - static_cast<float>(window->getSize().y / 2) + 10 });
+	//scoreBoard.setPosition({ player->getPosition().x - static_cast<float>(window->getSize().x / 2) + 10, player->getPosition().y - static_cast<float>(window->getSize().y / 2) + 10 });
+	scoreBoard.setPosition({ player->getPosition().x - windowSize.x / 2 + 10, player->getPosition().y - windowSize.y / 2 + 10 });
 	playerCamera.setCenter(player->getPosition());
-	window->setView(playerCamera);
-	player->update(dt, window, playerCamera);
-	moveLives();
 
+	////////////////////////////////////
+	//window->setView(playerCamera); moved to draw function
+	this->dt = dt;
+	//player->update(dt, window, playerCamera);
+
+	moveLives();
 	if (lives <= 0)
 	{
 		die();
@@ -237,7 +240,8 @@ void GameState::entityLifeCycleLoop(float dt)
 {
 	for (int i = entities.size() - 1; i >= 0; i--)
 	{
-		entities[i]->update(dt, window, playerCamera);
+		/////////////////////////////////////////
+		//entities[i]->update(dt, window, playerCamera);
 
 		if (getDistance(player, entities[i]) >= 600 && entities[i]->getType() != EntityType::PLANET) //remove asteroids and bullets that are too far away from player
 			entities[i]->kill();
@@ -305,32 +309,33 @@ void GameState::particlesLoop(float dt)
 	}
 }
 
-void GameState::render(sf::RenderTarget* window)
+void GameState::render(sf::RenderWindow& window, sf::RenderStates states)
 {
-	window->draw(marker);
-	window->draw(*player);
-	window->draw(scoreBoard);
+	player->update(dt, window, playerCamera);
+	window.setView(playerCamera);
+	window.draw(*player);
+	window.draw(scoreBoard);
 	for (auto& i : entities)
 	{
-		window->draw(*i);
-		//window->draw(i->getHitBox());
+		window.draw(*i);
+		i->update(dt, window, playerCamera);
 	}
 
 	for (auto& i : particles)
 	{
-		window->draw(*i);
+		window.draw(*i);
 	}
 
-	if(livesVec.size() > 0)
+	if (livesVec.size() > 0)
 	{
 		for (auto& i : livesVec)
 		{
-			window->draw(i);
+			window.draw(i);
 		}
 	}
 	if (lives <= 0)
 	{
-		window->draw(deathText);
+		window.draw(deathText);
 	}
 }
 
@@ -347,8 +352,8 @@ void GameState::eventHandler(sf::RenderWindow& window, sf::Event& event, float d
 		clearEntities();
 		states->pop();
 		window.setView(window.getDefaultView());
-		states->push(new MainMenuState(this->window, this->states));
-		states->push(new TitleScreenState(this->window, this->states));
+		states->push(new MainMenuState(windowSize, states));
+		states->push(new TitleScreenState(windowSize, states));
 	}
 }
 

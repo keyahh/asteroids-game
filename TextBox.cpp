@@ -7,8 +7,7 @@ TextBox::TextBox()
 	setFillColor(sf::Color::White);
 }
 
-TextBox::TextBox(sf::RenderWindow* window, const std::string& text, const sf::Font& font, const sf::Vector2f& size)
-	: window(window)
+TextBox::TextBox(const std::string& text, const sf::Font& font, const sf::Vector2f& size)
 {
 	setSize(size);
 	setFillColor(sf::Color::White);
@@ -17,8 +16,7 @@ TextBox::TextBox(sf::RenderWindow* window, const std::string& text, const sf::Fo
 	alignLeft(*this, TextBox::text);
 }
 
-TextBox::TextBox(sf::RenderWindow* window, const std::string& text, const sf::Font& font, const sf::Vector2f& boxSize, int fontSize, const sf::Color& textColor, const sf::Color& boxColor)
-	: window(window)
+TextBox::TextBox(const std::string& text, const sf::Font& font, const sf::Vector2f& boxSize, int fontSize, const sf::Color& textColor, const sf::Color& boxColor)
 {
 	setSize(boxSize);
 	setFillColor(boxColor);
@@ -27,14 +25,22 @@ TextBox::TextBox(sf::RenderWindow* window, const std::string& text, const sf::Fo
 	centerText(*this, TextBox::text);
 }
 
-void TextBox::create(const std::string& text, sf::RenderWindow* window, const sf::Font& font, const sf::Vector2f& boxSize, int fontSize, const sf::Color& textColor, const sf::Color& boxColor)
+void TextBox::create(const std::string& text, const sf::Font& font, const sf::Vector2f& boxSize, int fontSize, const sf::Color& textColor, const sf::Color& boxColor)
 {
-	window = window;
 	setSize(boxSize);
 	setFillColor(boxColor);
 	TextBox::text = sf::Text(text, font, fontSize);
 	TextBox::text.setFillColor(textColor);
 	centerText(*this, TextBox::text);
+}
+
+void TextBox::eventHandler(sf::RenderWindow& window, sf::Event event, float dt, int pad)
+{
+	if (MouseEvents::isClicked(*this, window, pad) && canClick)
+	{
+		clicked = true;
+		canClick = false;
+	}
 }
 
 void TextBox::alignLeft(const sf::Shape& obj, sf::Text& text)
@@ -83,19 +89,14 @@ bool TextBox::checkClick(sf::Window* window) const
 	return false;
 }
 
-void TextBox::update(const float& dt, sf::Window* window)
+void TextBox::update(float dt)
 {
-	if (checkClick(window)) {
-		clicked = !clicked;
-	}
-
-	if (clicked) {
-		clickTime += dt;
-		if (clickTime >= clickCoolDown)
-		{
-			canClick = true;
-			clickTime = 0.0;
-		}
+	clickTime += dt;
+	if (clickTime >= clickCoolDown)
+	{
+		clickTime = 0.f;
+		canClick = true;
+		clicked = false;
 	}
 }
 
