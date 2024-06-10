@@ -72,10 +72,20 @@ void Game::render()
     
     if (!states.empty())
     {
-        states.top()->render(*window, renderStates);
+        //states.top()->render(*window, renderStates);
+        window->draw(*states.top());
     }
 
     window->display();
+}
+
+void Game::draw(sf::RenderTarget& target, sf::RenderStates states) const
+{
+    if (!this->states.empty())
+    {
+        //states.top()->render(*window, renderStates);
+        window->draw(*(this->states).top());
+    }
 }
 
 void Game::run()

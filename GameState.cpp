@@ -315,12 +315,6 @@ void GameState::render(sf::RenderWindow& window, sf::RenderStates states)
 	window.draw(*player);
 	window.draw(scoreBoard);
 
-	//setting rotation of player
-	sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-	sf::Vector2f inViewPos = window.mapPixelToCoords({ mousePos.x, mousePos.y }, playerCamera);
-	rotation = (atan2(inViewPos.y - player->getPosition().y, inViewPos.x - player->getPosition().x) * (180.f / 3.141593f)) + 90.f;
-	player->setRotation(rotation);
-
 	for (auto& i : entities)
 	{
 		window.draw(*i);
@@ -344,8 +338,46 @@ void GameState::render(sf::RenderWindow& window, sf::RenderStates states)
 	}
 }
 
+void GameState::draw(sf::RenderTarget& target, sf::RenderStates states) const
+{
+	target.setView(playerCamera);
+	target.draw(*player);
+	target.draw(scoreBoard);
+
+	for (auto& i : entities)
+	{
+		target.draw(*i);
+	}
+
+	for (auto& i : particles)
+	{
+		target.draw(*i);
+	}
+
+	if (livesVec.size() > 0)
+	{
+		for (auto& i : livesVec)
+		{
+			target.draw(i);
+		}
+	}
+	if (lives <= 0)
+	{
+		target.draw(deathText);
+	}
+}
+
 void GameState::eventHandler(sf::RenderWindow& window, sf::Event& event, float dt)
 {
+	//setting rotation of player
+	if(lives > 0)
+	{
+		sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+		sf::Vector2f inViewPos = window.mapPixelToCoords({ mousePos.x, mousePos.y }, playerCamera);
+		rotation = (atan2(inViewPos.y - player->getPosition().y, inViewPos.x - player->getPosition().x) * (180.f / 3.141593f)) + 90.f;
+		player->setRotation(rotation);
+	}
+
 	if (player->checkShot())
 	{
 		entities.push_back(new Bullet(Textures::getTexture(Textures::BULLET), player->getRotation(), player->getPosition(), true));

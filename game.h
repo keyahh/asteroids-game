@@ -5,7 +5,7 @@
 #include "TitleScreenState.h"
 #include "MainMenuState.h"
 
-class Game
+class Game : public sf::Drawable
 {
 private:
 	sf::Event event;
@@ -26,6 +26,7 @@ public:
 	void eventHandler(sf::RenderWindow& window, sf::Event event, float dt);
 	void update();
 	void render();
+	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	void run();
 	void closeGame();
 

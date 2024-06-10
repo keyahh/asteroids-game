@@ -35,6 +35,12 @@ void TitleScreenState::render(sf::RenderWindow& window, sf::RenderStates states)
 	window.draw(startButton);
 }
 
+void TitleScreenState::draw(sf::RenderTarget& target, sf::RenderStates states) const
+{
+	target.draw(rect);
+	target.draw(startButton);
+}
+
 void TitleScreenState::eventHandler(sf::RenderWindow& window, sf::Event& event, float dt)
 {
 	startButton.eventHandler(window, event, dt);

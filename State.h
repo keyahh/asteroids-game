@@ -16,7 +16,7 @@
 #include "Textures.h"
 #include "Helper/Button.h"
 
-class State
+class State : public sf::Drawable
 {
 private:
 
@@ -34,7 +34,9 @@ public:
 	bool checkKeyPress(const sf::Keyboard::Key& key) const;
 
 	virtual void close();
+
 	virtual void render(sf::RenderWindow& window, sf::RenderStates states) = 0;
+	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const = 0;
 
 	virtual void update(float dt);
 	virtual void eventHandler(sf::RenderWindow& window, sf::Event& event, float dt);

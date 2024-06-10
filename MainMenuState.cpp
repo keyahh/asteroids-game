@@ -48,6 +48,13 @@ void MainMenuState::render(sf::RenderWindow& window, sf::RenderStates states)
 	window.draw(newGame);
 }
 
+void MainMenuState::draw(sf::RenderTarget& target, sf::RenderStates states) const
+{
+	target.draw(rect);
+	target.draw(continueGame);
+	target.draw(newGame);
+}
+
 void MainMenuState::eventHandler(sf::RenderWindow& window, sf::Event& event, float dt)
 {
 	continueGame.eventHandler(window, event, dt);
