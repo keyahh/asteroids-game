@@ -11,7 +11,7 @@ Planet::Planet(sf::Texture* texture, const sf::Vector2f& startPos, int row, int 
 	//setOrigin({ getLocalBounds().width / 2, getLocalBounds().height / 2 });
 }
 
-void Planet::update(float dt, sf::RenderWindow& window, sf::View& view)
+void Planet::update(float dt)
 {
 	setOrigin({ getLocalBounds().width / 2, getLocalBounds().height / 2 });
 }

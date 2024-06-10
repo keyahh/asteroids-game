@@ -15,9 +15,7 @@ public:
 	Asteroid(sf::Texture* texture, int value, float rotation);
 	Asteroid(sf::Texture* texture, int value, float rotation, const sf::Vector2f& startPos, EntityType type = ASTEROID_LARGE, int baseSpeed = 100);
 
-	virtual void update(float dt, sf::RenderWindow* window, sf::View& view);
-	virtual void update(float dt, sf::RenderWindow& window, sf::View& view);
-
+	virtual void update(float dt);
 	const float getRotation() const;
 	virtual const int getValue() const;
 	void setRotation(float rotation);

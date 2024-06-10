@@ -32,6 +32,10 @@ void Entity::move(const sf::Vector2f& vec, float dt)
 	Sprite::move({ vec.x * speed * dt, vec.y * speed * dt });
 }
 
+void Entity::update(float dt)
+{
+}
+
 void Entity::update(float dt, sf::RenderWindow* window, sf::View& view)
 {
 }

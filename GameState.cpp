@@ -221,7 +221,7 @@ void GameState::update(float dt)
 	////////////////////////////////////
 	//window->setView(playerCamera); moved to draw function
 	this->dt = dt;
-	//player->update(dt, window, playerCamera);
+	player->update(dt);
 
 	moveLives();
 	if (lives <= 0)
@@ -241,7 +241,7 @@ void GameState::entityLifeCycleLoop(float dt)
 	for (int i = entities.size() - 1; i >= 0; i--)
 	{
 		/////////////////////////////////////////
-		//entities[i]->update(dt, window, playerCamera);
+		entities[i]->update(dt);
 
 		if (getDistance(player, entities[i]) >= 600 && entities[i]->getType() != EntityType::PLANET) //remove asteroids and bullets that are too far away from player
 			entities[i]->kill();
@@ -311,14 +311,19 @@ void GameState::particlesLoop(float dt)
 
 void GameState::render(sf::RenderWindow& window, sf::RenderStates states)
 {
-	player->update(dt, window, playerCamera);
 	window.setView(playerCamera);
 	window.draw(*player);
 	window.draw(scoreBoard);
+
+	//setting rotation of player
+	sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+	sf::Vector2f inViewPos = window.mapPixelToCoords({ mousePos.x, mousePos.y }, playerCamera);
+	rotation = (atan2(inViewPos.y - player->getPosition().y, inViewPos.x - player->getPosition().x) * (180.f / 3.141593f)) + 90.f;
+	player->setRotation(rotation);
+
 	for (auto& i : entities)
 	{
 		window.draw(*i);
-		i->update(dt, window, playerCamera);
 	}
 
 	for (auto& i : particles)

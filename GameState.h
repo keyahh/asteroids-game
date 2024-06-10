@@ -28,6 +28,7 @@ private:
 	sf::Text deathText;
 
 	float asteroidSpawnTime = 2.5, asteroidSpawnTimeProgress = 4.5, dt;
+	float rotation; //for player
 
 	int rngRangeNeg(int min, int max);
 	void setNewGame();

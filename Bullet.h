@@ -12,10 +12,8 @@ private:
 public:
 	Bullet();
 	Bullet(sf::Texture* texture, float rotation, const sf::Vector2f& startPos, bool fromPlayer = false);
-	virtual void update(float dt, sf::RenderWindow* window, sf::View& view);
-	virtual void update(float dt, sf::RenderWindow& window, sf::View& view);
+	virtual void update(float dt);
 	virtual const int getValue() const;
-	//void move(const sf::Vector2f& vec, float dt);
 	const bool getCanKill() const;
 };
 

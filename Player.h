@@ -16,8 +16,7 @@ public:
 	Player();
 	Player(sf::Texture* texture);
 
-	//virtual void move(const sf::Vector2f& vec, float dt);
-	virtual void update(float dt, sf::RenderWindow& window, sf::View& view);
+	virtual void update(float dt);
 	virtual const int getValue() const;
 
 	bool checkKeyPress() const;
@@ -30,6 +29,7 @@ public:
 	void setCanShoot(bool flag);
 	void setShot(bool flag);
 	void setInvul(bool flag);
+	void setRotation(float rotation);
 
 	void hit();
 };

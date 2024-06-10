@@ -13,7 +13,7 @@ public:
 
 	Planet(sf::Texture* texture = nullptr, const sf::Vector2f& startPos = {0.f,0.f}, int row = 0, int col = 0);
 
-	virtual void update(float dt, sf::RenderWindow& window, sf::View& view);
+	virtual void update(float dt);
 	virtual const int getValue() const;
 	virtual void hit();
 };

@@ -24,15 +24,7 @@ Asteroid::Asteroid(sf::Texture* texture, int value, float rotation, const sf::Ve
 	setScale(3.f,3.f);
 }
 
-void Asteroid::update(float dt, sf::RenderWindow* window, sf::View& view)
-{
-	setOrigin({ getLocalBounds().width / 2, getLocalBounds().height / 2 });
-	double radian = (rotation - 90) * (3.141593 / 180);
-	sf::Vector2f direction = { static_cast<float>(cos(radian)), static_cast<float>(sin(radian)) };
-	move(direction, dt);
-}
-
-void Asteroid::update(float dt, sf::RenderWindow& window, sf::View& view)
+void Asteroid::update(float dt)
 {
 	setOrigin({ getLocalBounds().width / 2, getLocalBounds().height / 2 });
 	double radian = (rotation - 90) * (3.141593 / 180);
