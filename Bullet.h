@@ -8,6 +8,7 @@ class Bullet : public Entity
 private:
 	bool fromPlayer;
 	float rotation, maxTravelTime = 5.0f, travelTime = 0.0f;
+	int value;
 
 public:
 	Bullet();

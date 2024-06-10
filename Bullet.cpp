@@ -11,6 +11,10 @@ Bullet::Bullet(sf::Texture* texture, float rotation, const sf::Vector2f& startPo
 	speed = 800;
 	setPosition(startPos);
 	setRotation(rotation);
+	if (!fromPlayer)
+	{
+		value = -100;
+	}
 }
 
 void Bullet::update(float dt)
@@ -29,7 +33,7 @@ void Bullet::update(float dt)
 
 const int Bullet::getValue() const
 {
-	return 0;
+	return value;
 }
 
 const bool Bullet::getCanKill() const

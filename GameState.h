@@ -9,6 +9,7 @@
 #include "BigExplosion.h"
 #include "Planet.h"
 #include "MainMenuState.h"
+#include "UFO.h"
 #include <cstdlib>
 #include <ctime>
 
@@ -45,6 +46,7 @@ private:
 	void entityLifeCycleLoop(float dt);
 	void killAsteroid(Entity* asteroid, Entity* bullet);
 	void hitPlanet(Entity* planet, Entity* bullet);
+	void summonUFO();
 
 	float getDistance(Entity* entity1, Entity* entity2);
 

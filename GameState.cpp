@@ -282,6 +282,14 @@ void GameState::collisionLoop()
 					entities[i]->kill();
 				}
 			}
+			else if (i != j && entities[i]->getType() == BULLET && entities[i]->getValue() != -100 && entities[j]->getType() == UFO)
+			{
+				if (getDistance(entities[i], entities[j]) <= 25.0f)
+				{
+					killAsteroid(entities[j], entities[i]);
+					entities[i]->kill();
+				}
+			}
 			else
 				continue;
 		}
@@ -289,6 +297,14 @@ void GameState::collisionLoop()
 		{
 			if (getDistance(player, entities[i]) <= 35.f)
 			{
+				hitPlayer();
+			}
+		}
+		else if (!player->getInvul() && (entities[i]->getType() == BULLET && entities[i]->getValue() == -100)) //enemy bullet collision
+		{
+			if (getDistance(player, entities[i]) <= 35.f)
+			{
+				entities[i]->kill();
 				hitPlayer();
 			}
 		}

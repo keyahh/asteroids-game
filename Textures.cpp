@@ -46,5 +46,8 @@ std::string Textures::getTexturePath(textureEnum texture)
     case BIG_EXPLOSION:
         return "images/entities/bigexplosion.png";
         break;
+    case UFO:
+        return "images/entities/ufo.png";
+        break;
     }
 }
