@@ -11,7 +11,7 @@ TitleScreenState::TitleScreenState(const sf::Vector2f& windowSize, std::stack<St
 	rect.setTexture(Textures::getTexture(Textures::SPLASH_SCREEN));
 
 	startButton.create("Start Game", Fonts::getFont(Fonts::OPEN_SANS_REGULAR), { 150,50 }, 24, sf::Color::White, sf::Color::Black);
-	startButton.setPosition({ 325, 350 });
+	startButton.setPosition({ windowSize.x / 2 - startButton.getGlobalBounds().width / 2, windowSize.y / 2 - startButton.getGlobalBounds().height / 2 });
 }
 
 void TitleScreenState::update(float dt)

@@ -121,14 +121,14 @@ int GameState::rngRangeNeg(int min, int max)
 
 void GameState::setPlanet()
 {
-	float randXPos = rngRangeNeg(300, 2000);
-	float randYPos = rngRangeNeg(300, 2000);
+	float randXPos = rand() % 6000 - 3000;
+	float randYPos = rand() % 6000 - 3000;
 	entities.push_back(new Planet(Textures::getTexture(Textures::PLANETS), {randXPos, randYPos}, rand() % 3, rand() % 4));
 }
 
 void GameState::summonPlanets()
 {
-	for (int i = 0; i < 20; i++)
+	for (int i = 0; i < 30; i++)
 	{
 		setPlanet();
 	}
@@ -136,15 +136,15 @@ void GameState::summonPlanets()
 
 void GameState::setAsteroid()
 {
-	float randXPos = player->getPosition().x + rngRangeNeg(200, 300);
-	float randYPos = player->getPosition().y + rngRangeNeg(200, 300);
+	float randXPos = player->getPosition().x + rngRangeNeg(200, 700);
+	float randYPos = player->getPosition().y + rngRangeNeg(200, 700);
 
 	entities.push_back(new Asteroid(Textures::getTexture(Textures::ASTEROID_LARGE), 50, rand() % 360, {randXPos, randYPos }));
 }
 
 void GameState::summonAsteroids()
 {
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 20; i++)
 	{
 		setAsteroid();
 	}
@@ -240,10 +240,9 @@ void GameState::entityLifeCycleLoop(float dt)
 {
 	for (int i = entities.size() - 1; i >= 0; i--)
 	{
-		/////////////////////////////////////////
 		entities[i]->update(dt);
 
-		if (getDistance(player, entities[i]) >= 600 && entities[i]->getType() != EntityType::PLANET) //remove asteroids and bullets that are too far away from player
+		if (getDistance(player, entities[i]) >= 1000 && entities[i]->getType() != EntityType::PLANET) //remove asteroids and bullets that are too far away from player
 			entities[i]->kill();
 
 		if (entities[i]->getCanKill()) //destroy entities marked to be killed

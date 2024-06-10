@@ -8,13 +8,13 @@
 class Game : public sf::Drawable
 {
 private:
-	sf::Event event;
-	sf::Clock clock;
+	//sf::Event event;
+	//sf::Clock clock;
 	sf::RenderWindow* window;
 	std::ofstream out;
 	std::ifstream in;
 	sf::RenderStates renderStates;
-	float dt = 0;
+	//float dt = 0;
 
 	std::stack<State*> states;
 
@@ -24,7 +24,7 @@ public:
 	Game(sf::RenderWindow* window);
 
 	void eventHandler(sf::RenderWindow& window, sf::Event event, float dt);
-	void update();
+	void update(float dt);
 	void render();
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	void run();
