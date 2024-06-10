@@ -36,15 +36,16 @@ void Entity::update(float dt)
 {
 }
 
-void Entity::update(float dt, sf::RenderWindow* window, sf::View& view)
-{
-}
-
-void Entity::update(float dt, sf::RenderWindow& window, sf::View& view)
-{
-}
-
 void Entity::hit()
+{
+}
+
+bool Entity::getCanShoot() const
+{
+	return false;
+}
+
+void Entity::setCanShoot(bool flag)
 {
 }
 

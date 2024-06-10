@@ -35,7 +35,6 @@ public:
 
 	virtual void close();
 
-	virtual void render(sf::RenderWindow& window, sf::RenderStates states) = 0;
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const = 0;
 
 	virtual void update(float dt);

@@ -9,7 +9,7 @@
 #include "BigExplosion.h"
 #include "Planet.h"
 #include "MainMenuState.h"
-#include "UFO.h"
+#include "Ufo.h"
 #include <cstdlib>
 #include <ctime>
 
@@ -28,7 +28,7 @@ private:
 	sf::Text scoreBoard;
 	sf::Text deathText;
 
-	float asteroidSpawnTime = 2.5, asteroidSpawnTimeProgress = 4.5, dt;
+	float asteroidSpawnTime = 2.5, asteroidSpawnTimeProgress = 4.5, dt, ufoSpawnTime = 8.f, ufoSpawnTimeProgress = 10.f;
 	float rotation; //for player
 
 	int rngRangeNeg(int min, int max);
@@ -41,12 +41,14 @@ private:
 	void setAsteroid(); //creates an asteroid
 	void summonAsteroids(); //summons a random amount of asteroids around the player's view
 	void asteroidsLoop(float dt);
+	void ufoLoop(float dt);
 	void collisionLoop();
 	void particlesLoop(float dt);
 	void entityLifeCycleLoop(float dt);
 	void killAsteroid(Entity* asteroid, Entity* bullet);
 	void hitPlanet(Entity* planet, Entity* bullet);
 	void summonUFO();
+	void ufoMain(Entity* ufo);
 
 	float getDistance(Entity* entity1, Entity* entity2);
 
@@ -62,7 +64,6 @@ public:
 	GameState(const sf::Vector2f& windowSize, std::stack<State*>* states, bool readFromFile = false);
 
 	virtual void update(float dt);
-	virtual void render(sf::RenderWindow& window, sf::RenderStates states);
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
 	virtual void eventHandler(sf::RenderWindow& window, sf::Event& event, float dt);

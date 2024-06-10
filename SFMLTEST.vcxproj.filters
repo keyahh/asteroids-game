@@ -24,7 +24,7 @@
     <ClInclude Include="Planet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="UFO.h">
+    <ClInclude Include="Ufo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Explosion.h">
@@ -131,7 +131,7 @@
     <ClCompile Include="Planet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="UFO.cpp">
+    <ClCompile Include="Ufo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Fonts.cpp">

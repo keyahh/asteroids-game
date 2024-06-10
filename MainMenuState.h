@@ -21,7 +21,6 @@ public:
 	MainMenuState(const sf::Vector2f& windowSize, std::stack<State*>* states);
 
 	virtual void update(float dt);
-	virtual void render(sf::RenderWindow& window, sf::RenderStates states);
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	virtual void eventHandler(sf::RenderWindow& window, sf::Event& event, float dt);
 };

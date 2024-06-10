@@ -41,12 +41,6 @@ void MainMenuState::update(float dt)
 	newGame.update(dt);
 }
 
-void MainMenuState::render(sf::RenderWindow& window, sf::RenderStates states)
-{
-	window.draw(rect);
-	window.draw(continueGame);
-	window.draw(newGame);
-}
 
 void MainMenuState::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {

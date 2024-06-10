@@ -21,13 +21,12 @@ public:
 	//Entity(const std::string& texturePath, int rows, int cols);
 	Entity(sf::Texture* texture, int rows, int cols, EntityType type);
 
-	void move(const sf::Vector2f& vec, float dt);
+	virtual void move(const sf::Vector2f& vec, float dt);
 	virtual void update(float dt);
-	virtual void update(float dt, sf::RenderWindow* window, sf::View& view);
-	virtual void update(float dt, sf::RenderWindow& window, sf::View& view);
 	virtual const int getValue() const = 0;
 	virtual void hit();
-
+	virtual bool getCanShoot() const;
+	virtual void setCanShoot(bool flag);
 	const bool getCanKill() const;
 	void kill();
 	const EntityType& getType() const;

@@ -40,7 +40,7 @@
     <ClInclude Include="TextBox.h" />
     <ClInclude Include="Textures.h" />
     <ClInclude Include="TitleScreenState.h" />
-    <ClInclude Include="UFO.h" />
+    <ClInclude Include="Ufo.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AnimatedSpriteSheet.cpp" />
@@ -64,7 +64,7 @@
     <ClCompile Include="TextBox.cpp" />
     <ClCompile Include="Textures.cpp" />
     <ClCompile Include="TitleScreenState.cpp" />
-    <ClCompile Include="UFO.cpp" />
+    <ClCompile Include="Ufo.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
