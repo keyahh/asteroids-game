@@ -17,7 +17,6 @@ public:
 	TitleScreenState(const sf::Vector2f& windowSize, std::stack<State*>* states);
 
 	virtual void update(float dt);
-	virtual void update(sf::RenderTarget& target, float dt);
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	virtual void eventHandler(sf::RenderWindow& window, sf::Event& event, float dt);
 

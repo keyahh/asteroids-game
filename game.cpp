@@ -27,10 +27,6 @@ void Game::eventHandler(sf::RenderWindow& window, sf::Event event, float dt)
 
 void Game::update(float dt)
 {
-    //dt = clock.restart().asSeconds();
-
-    //eventHandler(*window, event, dt);
-
     if (!states.empty())
     {
         states.top()->update(dt);
@@ -47,36 +43,12 @@ void Game::update(float dt)
     }
 }
 
-void Game::render()
-{
-    window->clear();
-    
-    if (!states.empty())
-    {
-        //states.top()->render(*window, renderStates);
-        window->draw(*states.top());
-    }
-
-    window->display();
-}
-
 void Game::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     if (!this->states.empty())
     {
-        //states.top()->render(*window, renderStates);
         target.draw(*(this->states).top());
     }
-}
-
-void Game::run()
-{
-    /*while (window->isOpen()) 
-    {
-        update();
-        render();
-    }*/
-
 }
 
 void Game::closeGame()
@@ -86,7 +58,6 @@ void Game::closeGame()
 
 Game& Game::operator=(const Game& game)
 {
-    this->window = game.window;
     this->states = game.states;
     return *this;
 }

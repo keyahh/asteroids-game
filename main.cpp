@@ -5,7 +5,6 @@ int main()
     sf::RenderWindow window(sf::VideoMode(1920, 1080, 32), "Asteroids");
 
     Game game(&window);
-    //game.run();
     sf::Clock clock;
     sf::Event event;
     float dt;

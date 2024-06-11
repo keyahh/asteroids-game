@@ -20,7 +20,8 @@ MainMenuState::MainMenuState(const sf::Vector2f& windowSize, std::stack<State*>*
 
 const bool MainMenuState::findSaveFile() const
 {
-	return static_cast<bool>(std::ifstream("game_save.txt"));
+	std::ifstream ifs("game_save.txt");
+	return ifs.good();
 }
 
 void MainMenuState::setNewGame()
@@ -57,6 +58,10 @@ void MainMenuState::eventHandler(sf::RenderWindow& window, sf::Event& event, flo
 	if (continueGame.getClicked() && findSaveFile())
 	{
 		loadGame();
+	}
+	else if (continueGame.getClicked() && !findSaveFile())
+	{
+		setNewGame();
 	}
 	if (newGame.getClicked())
 	{

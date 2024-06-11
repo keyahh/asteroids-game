@@ -416,6 +416,7 @@ void GameState::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
 void GameState::eventHandler(sf::RenderWindow& window, sf::Event& event, float dt)
 {
+	window.setMouseCursorVisible(false);
 	//setting rotation of player
 	if(lives > 0)
 	{

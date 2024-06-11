@@ -9,10 +9,6 @@ Player::Player()
 Player::Player(sf::Texture* texture)
 	: Entity(texture, 1, 1, PLAYER)
 {
-	/*for (int i = 0; i < 4; i++)
-	{
-		setAnimation(i);
-	}*/;
 	setScale(0.3f, 0.3f);
 	speed = 2.f;
 }

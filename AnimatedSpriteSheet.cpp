@@ -22,38 +22,6 @@ AnimatedSpriteSheet::AnimatedSpriteSheet(sf::Texture* texture, int rows, int col
 	setTexture(*AnimatedSpriteSheet::texture);
 }
 
-//void AnimatedSpriteSheet::init(const std::string& imgPath, int rows, int cols)
-//{
-//	if (!texture->loadFromFile(imgPath))
-//		exit(28);
-//	int width = texture.getSize().x;
-//	int height = texture.getSize().y;
-//
-//	intRect.width = width / cols;
-//	intRect.height = height / rows;
-//	//pos defaults at 0,0
-//
-//	setTextureRect(intRect);
-//	setTexture(texture);
-//	//sprite.setScale(2.5, 2.5);
-//
-//	//hitbox.setFillColor(sf::Color::Blue);
-//	//hitbox.setSize({ static_cast<float>(width / cols * 0.7) , static_cast<float>(height/ rows * 0.8) });
-//	//centerHitBox();
-//}
-
-void AnimatedSpriteSheet::centerHitBox() //centers on sprite
-{
-	//hitbox.setPosition({ getGlobalBounds().left + (getGlobalBounds().width / 2) - hitbox.getGlobalBounds().width / 2, getGlobalBounds().top + (getGlobalBounds().height / 2) - hitbox.getGlobalBounds().height / 2 });
-}
-
-/*
-void AnimatedSpriteSheet::draw(sf::RenderTarget& window, sf::RenderStates states) const
-{
-	//window.draw(hitbox);
-	window.draw(*this);
-}
-*/
 
 void AnimatedSpriteSheet::addAnimation(const Animation& animation)
 {

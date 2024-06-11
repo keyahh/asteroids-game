@@ -7,7 +7,7 @@ class Ufo : public Entity
 {
 private:
 	int value = 100;
-	float shootCD = 1.f, shootCDTime = 0.f;
+	float shootCD = 0.6f, shootCDTime = 0.f;
 	bool canShoot = false;
 
 public:

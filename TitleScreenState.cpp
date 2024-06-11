@@ -19,16 +19,6 @@ void TitleScreenState::update(float dt)
 	startButton.update(dt);
 }
 
-void TitleScreenState::update(sf::RenderTarget& target, float dt)
-{
-	startButton.update(dt);
-
-	if (startButton.getClicked())
-	{
-		close();
-	}
-}
-
 void TitleScreenState::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	target.draw(rect);
@@ -37,6 +27,7 @@ void TitleScreenState::draw(sf::RenderTarget& target, sf::RenderStates states) c
 
 void TitleScreenState::eventHandler(sf::RenderWindow& window, sf::Event& event, float dt)
 {
+	window.setMouseCursorVisible(true);
 	startButton.eventHandler(window, event, dt);
 	if (startButton.getClicked())
 	{
