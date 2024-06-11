@@ -2,7 +2,7 @@
 
 Game::Game()
 {
-    out.open("game_save.txt", std::ios::app);
+    //out.open("game_save.txt", std::ios::app);
 }
 
 Game::Game(const Game& game)
@@ -13,7 +13,7 @@ Game::Game(const Game& game)
 Game::Game(sf::RenderWindow* window)
 {
     Game::window = window;
-    out.open("game_save.txt", std::ios::app);
+    //out.open("game_save.txt", std::ios::app);
 
     states.push(new MainMenuState((sf::Vector2f)window->getSize(), &states));
     states.push(new TitleScreenState((sf::Vector2f)window->getSize(), &states));

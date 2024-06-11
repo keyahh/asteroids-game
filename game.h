@@ -9,8 +9,8 @@ class Game : public sf::Drawable
 {
 private:
 	sf::RenderWindow* window;
-	std::ofstream out;
-	std::ifstream in;
+	//std::ofstream out;
+	//std::ifstream in;
 	std::stack<State*> states;
 
 public:
